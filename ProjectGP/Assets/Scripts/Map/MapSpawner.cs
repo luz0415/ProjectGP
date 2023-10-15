@@ -55,7 +55,8 @@ public class MapSpawner : MonoBehaviour
 
     private Queue<Room> roomSpawnQueue = new Queue<Room>();
 
-    public GameObject[] combatMapPrefabs;
+    public List<GameObject> combatMapPrefabs;
+    public List<GameObject> specialMapPrefabs;
 
     private void Awake()
     {
@@ -184,8 +185,27 @@ public class MapSpawner : MonoBehaviour
 
     GameObject SelectRoomPrefab()
     {
-        int roomIndex = Random.Range(0, combatMapPrefabs.Length);
-        return combatMapPrefabs[roomIndex];
+        int leftRoomCount = maxRoomCount - roomCount;
+        GameObject selectedRoom;
+        int roomIndex;
+
+        if (leftRoomCount == maxRoomCount)
+        {
+            roomIndex = Random.Range(0, combatMapPrefabs.Count);
+            selectedRoom = combatMapPrefabs[roomIndex];
+        }
+        else if(leftRoomCount == specialMapPrefabs.Count)
+        {
+            roomIndex = Random.Range(0, specialMapPrefabs.Count);
+            selectedRoom = specialMapPrefabs[roomIndex];
+            specialMapPrefabs.RemoveAt(roomIndex);
+        }
+        else
+        {
+            roomIndex = Random.Range(0, combatMapPrefabs.Count);
+            selectedRoom = combatMapPrefabs[roomIndex];
+        }
+        return selectedRoom;
     }
 
 

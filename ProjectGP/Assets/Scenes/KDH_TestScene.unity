@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 1711205011}
   - component: {fileID: 1711205010}
   m_Layer: 0
-  m_Name: Map Spawner
+  m_Name: 1F Map Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -409,6 +409,8 @@ MonoBehaviour:
   combatMapPrefabs:
   - {fileID: 5902009287043220134, guid: d51d0c4da5bddeb4d864916849e371b5, type: 3}
   - {fileID: 6919063224736880029, guid: 8fd7e5329430afc4fac7df9f0002aa75, type: 3}
+  specialMapPrefabs:
+  - {fileID: 961004321117050524, guid: 3e171a67e9ad6c64485fb8ee7fae81e5, type: 3}
 --- !u!4 &1711205011
 Transform:
   m_ObjectHideFlags: 0
@@ -422,7 +424,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2102197616
 PrefabInstance:
@@ -445,7 +447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4979083959625082, guid: 4ec55b0fc5a631142b1505018530d38b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4979083959625082, guid: 4ec55b0fc5a631142b1505018530d38b, type: 3}
       propertyPath: m_LocalScale.x
