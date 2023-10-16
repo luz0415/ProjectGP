@@ -22,11 +22,14 @@ public class TestPlayer : MonoBehaviour
     public Camera theCamera;
     private Rigidbody myRigid;
 
+    public Animator animator;
+
 
     // Start is called before the first frame update
     void Start()
     {
         myRigid = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         applySpeed = walkSpeed;
     }
 
@@ -76,6 +79,11 @@ public class TestPlayer : MonoBehaviour
 
         myRigid.MovePosition(transform.position + _velocity * Time.deltaTime);
 
+        // walk 애니메이션을 위한 함수
+        if (_moveDirX != 0 || _moveDirZ != 0)
+            animator.SetBool("isWalk", true);
+        else
+            animator.SetBool("isWalk", false);
     }
 
     //캐릭터 방향 회전

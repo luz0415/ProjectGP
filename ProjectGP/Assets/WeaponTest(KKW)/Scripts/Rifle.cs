@@ -15,7 +15,7 @@ public class Rifle : MonoBehaviour
     public GameObject bullet;   // 총알 프리팹
     public Transform firePos;   // 총구 위치
     public GameObject player;   // 플레이어
-
+    public TestPlayer testPlayer;
     public AudioClip fireSFX;
     private AudioSource source = null;
 
@@ -32,6 +32,8 @@ public class Rifle : MonoBehaviour
         // currentDamp마다 총 발사
         if(currentDamp <= 0 && currentBullet >0 && !isReload)
         {
+            testPlayer.animator.SetTrigger("shot");
+
             currentDamp = fireDamp;
             currentBullet--;
 
@@ -42,6 +44,8 @@ public class Rifle : MonoBehaviour
         // 총알 다 쓴 경우 재장전
         else if(currentBullet <= 0 && !isReload)
         {
+            testPlayer.animator.SetTrigger("reload");
+
             Debug.Log("Reload Start");
             isReload = true;
             StartCoroutine(ReloadBullet());
