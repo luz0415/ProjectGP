@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         TryRun();
         Move();
@@ -76,8 +76,8 @@ public class Player : MonoBehaviour
         Vector3 _moveVertical = Vector3.forward * _moveDirZ;
 
         Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized * applySpeed;
-        if (CheckHitWall(_velocity))
-            _velocity = Vector3.zero;
+        /*if (CheckHitWall(_velocity))
+            _velocity = Vector3.zero;*/
 
         myRigid.MovePosition(myRigid.position + _velocity * Time.deltaTime);
 
