@@ -76,8 +76,8 @@ public class Player : MonoBehaviour
         Vector3 _moveVertical = Vector3.forward * _moveDirZ;
 
         Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized * applySpeed;
-        /*if (CheckHitWall(_velocity))
-            _velocity = Vector3.zero;*/
+        if (CheckHitWall(_velocity))
+            _velocity = Vector3.zero;
 
         myRigid.MovePosition(myRigid.position + _velocity * Time.deltaTime);
 
@@ -100,8 +100,6 @@ public class Player : MonoBehaviour
 
     bool CheckHitWall(Vector3 movement)
     {
-        // 움직임에 대한 로컬 벡터를 월드 벡터로 변환해준다.
-        movement = transform.TransformDirection(movement);
         // scope로 ray 충돌을 확인할 범위를 지정할 수 있다.
         float scope = 1f;
 
