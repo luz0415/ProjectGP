@@ -632,12 +632,12 @@ MonoBehaviour:
   floorPlanX: 9
   floorPlanY: 8
   combatMapPrefabs:
-  - {fileID: 5902009287043220134, guid: d51d0c4da5bddeb4d864916849e371b5, type: 3}
-  - {fileID: 6919063224736880029, guid: 8fd7e5329430afc4fac7df9f0002aa75, type: 3}
-  - {fileID: 6919063224736880029, guid: 30250cc733b7b4744a7cfab7b5156093, type: 3}
+  - {fileID: 5902009287043220134, guid: f8f5b535ff4713441b71907764790cd1, type: 3}
+  - {fileID: 6919063224736880029, guid: 69c77bc5b2e10f648b517a7b3f0ec1f2, type: 3}
+  - {fileID: 6919063224736880029, guid: 6d500f05b13bb5c449d12ea1b0a7b5ce, type: 3}
   specialMapPrefabs:
-  - {fileID: 961004321117050524, guid: 3e171a67e9ad6c64485fb8ee7fae81e5, type: 3}
-  - {fileID: 961004321117050524, guid: aee3c31061e76d242a90b228f4cb6f21, type: 3}
+  - {fileID: 5902009287043220134, guid: db5ba70256c9f9f44acee233079c8516, type: 3}
+  - {fileID: 5902009287043220134, guid: 58be74ca2aa85fa47a91557717369d37, type: 3}
   - {fileID: 961004321117050524, guid: 3777441f456601346827109f1feaf46c, type: 3}
 --- !u!4 &1711205011
 Transform:
