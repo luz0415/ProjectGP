@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Rifle : MonoBehaviour
+public class GrenadeLauncher : MonoBehaviour
 {
     public float maxBullet;     // 최대 총알 수
     float currentBullet;        // 현재 남은 총알 수
@@ -16,6 +16,7 @@ public class Rifle : MonoBehaviour
     public Transform firePos;   // 총구 위치
     public GameObject player;   // 플레이어
     public TestPlayer testPlayer;
+
     public AudioClip fireSFX;
     private AudioSource source = null;
 
@@ -26,11 +27,11 @@ public class Rifle : MonoBehaviour
 
         source = GetComponent<AudioSource>();
     }
-    
+
     void BulletFire()
     {
         // currentDamp마다 총 발사
-        if(currentDamp <= 0 && currentBullet >0 && !isReload)
+        if (currentDamp <= 0 && currentBullet > 0 && !isReload)
         {
             testPlayer.animator.SetTrigger("shot");
 
@@ -40,22 +41,22 @@ public class Rifle : MonoBehaviour
             source.PlayOneShot(fireSFX);
 
             Instantiate(bullet, firePos.position, player.transform.rotation);
-        } 
+        }
         // 총알 다 쓴 경우 재장전
-        else if(currentBullet <= 0 && !isReload)
+        else if (currentBullet <= 0 && !isReload)
         {
             testPlayer.animator.SetTrigger("reload");
 
             Debug.Log("Reload Start");
             isReload = true;
             StartCoroutine(ReloadBullet());
-           
+
         }
     }
 
     IEnumerator ReloadBullet()
     {
-        for(float i = reloadTime; i > 0; i -= 0.1f)
+        for (float i = reloadTime; i > 0; i -= 0.1f)
         {
             yield return new WaitForSeconds(0.1f);
         }
@@ -68,7 +69,7 @@ public class Rifle : MonoBehaviour
     void Update()
     {
         currentDamp -= Time.deltaTime;
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Fire");
             BulletFire();
