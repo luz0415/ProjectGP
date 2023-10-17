@@ -95,7 +95,6 @@ public class Player : MonoBehaviour
 
         Vector3 rotatePosition = new Vector3(mousePosition.x, 0f, mousePosition.z) - myRigid.position;
         myRigid.rotation = Quaternion.Lerp(myRigid.rotation, Quaternion.LookRotation(rotatePosition), lookSensitivity * Time.deltaTime);
-        print(myRigid.rotation);
     }
 
     bool CheckHitWall(Vector3 movement)

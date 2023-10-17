@@ -39,9 +39,11 @@ public class GameManager : MonoBehaviour
         cameraController = FindObjectOfType<CameraController>();
         roomChangePostProcess = FindObjectOfType<PostProcessVolume>();
 
+        DontDestroyOnLoad(cameraController.gameObject);
+        DontDestroyOnLoad(roomChangePostProcess.gameObject);
+
         SetPostProcessDOFFocalLength(0f);
         SetPostProcessGrainIntensity(0f);
-
     }
 
     public void EndGame()

@@ -21,9 +21,9 @@ public class Map : MonoBehaviour
         }
     }
 
-    [SerializeField] private GameObject[] doors;
-    [SerializeField] private GameObject[] wallCenters;
-    [SerializeField] private GameObject[] portals;
+    [SerializeField] protected GameObject[] doors;
+    [SerializeField] protected GameObject[] wallCenters;
+    [SerializeField] protected GameObject[] portals;
 
     public bool isRoomEnd;
 
@@ -50,9 +50,9 @@ public class Map : MonoBehaviour
         }
     }
 
-    private void ActiveDoor()
+    protected virtual void ActiveDoor()
     {
-        for(int direction = 0; direction < 4; direction++)
+        for (int direction = 0; direction < 4; direction++)
         {
             if (neighborMap[direction] != null)
             {

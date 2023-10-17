@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -56,10 +57,13 @@ public class MapSpawner : MonoBehaviour
     private Queue<Room> roomSpawnQueue = new Queue<Room>();
 
     public List<GameObject> combatMapPrefabs;
+    private List<GameObject> originalCombatMapPrefabs = new List<GameObject>();
     public List<GameObject> specialMapPrefabs;
 
     private void Awake()
     {
+        originalCombatMapPrefabs = combatMapPrefabs.ToList();
+
         SetMaxRoomCount();
         FloorPlanInitialization();
         MakeFloorPlan();
@@ -80,7 +84,6 @@ public class MapSpawner : MonoBehaviour
                 floorPlan[i, j] = null;
             }
         }
-
     }
 
     private void MakeFloorPlan()
@@ -189,12 +192,7 @@ public class MapSpawner : MonoBehaviour
         GameObject selectedRoom;
         int roomIndex;
 
-        if (leftRoomCount == maxRoomCount)
-        {
-            roomIndex = Random.Range(0, combatMapPrefabs.Count);
-            selectedRoom = combatMapPrefabs[roomIndex];
-        }
-        else if(leftRoomCount == specialMapPrefabs.Count)
+        if (leftRoomCount == specialMapPrefabs.Count)
         {
             roomIndex = Random.Range(0, specialMapPrefabs.Count);
             selectedRoom = specialMapPrefabs[roomIndex];
@@ -204,6 +202,12 @@ public class MapSpawner : MonoBehaviour
         {
             roomIndex = Random.Range(0, combatMapPrefabs.Count);
             selectedRoom = combatMapPrefabs[roomIndex];
+            combatMapPrefabs.RemoveAt(roomIndex);
+
+            if (combatMapPrefabs.Count == 0)
+            {
+                combatMapPrefabs = originalCombatMapPrefabs.ToList();
+            }
         }
         return selectedRoom;
     }
