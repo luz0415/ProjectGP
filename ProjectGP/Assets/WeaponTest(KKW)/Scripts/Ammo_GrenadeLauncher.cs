@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,13 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
 
     public Transform Projectile;        // 유탄
     private Transform myTransform;
+    public GameObject _VFX;
+
+
+    // 속도 구하기 위한 변수
+    private Vector3 oldPosition;
+    private Vector3 currentPosition;
+    private double velocity;
 
     void Awake()
     {
@@ -23,19 +31,38 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
 
     void Start()
     {
+        oldPosition = transform.position;
+
         StartCoroutine(SimulateProjectile());
     }
 
     private void Update()
-    {       
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 화면 좌표에서 출발해 카메라를 통해 월드좌표로 발사할 Ray
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit)) // Ray가 발사해 맞았다면
-            {
-                mousePosition = hit.point; // mousePosition에 맞은 월드좌표 대입
-            }
+    {
+        SetTarget();
+        SetVelocity_Y();
 
-            Target = mousePosition;        
+    }
+
+    void SetTarget()
+    {
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 화면 좌표에서 출발해 카메라를 통해 월드좌표로 발사할 Ray
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) // Ray가 발사해 맞았다면
+        {
+            mousePosition = hit.point; // mousePosition에 맞은 월드좌표 대입
+        }
+
+        Target = mousePosition;
+    }
+
+    void SetVelocity_Y()
+    {
+        currentPosition = transform.position;
+        var dis = (currentPosition - oldPosition);
+        var distance = Math.Sqrt(Math.Pow(dis.x, 2) + Math.Pow(dis.y, 2) + Math.Pow(dis.z, 2));
+        velocity = distance / Time.deltaTime;
+        oldPosition = currentPosition;
     }
 
     // 유탄 발사 로직
@@ -68,12 +95,15 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
         {
             Projectile.Translate(0, (Vy - power * (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
 
+            Projectile.rotation = Quaternion.LookRotation(Target - Projectile.position);
+         
+
             elapse_time += Time.deltaTime;
 
             yield return null;
         }
 
-
-       
+        Instantiate(_VFX, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }
