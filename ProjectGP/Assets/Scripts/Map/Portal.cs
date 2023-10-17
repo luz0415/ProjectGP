@@ -8,19 +8,12 @@ public class Portal : MonoBehaviour
     public Transform targetEntrance;
     public int direction;
 
-    private Vector3 cameraPositionPreset;
-
-    private void Start()
-    {
-        cameraPositionPreset = Camera.main.transform.position;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
             other.transform.position = targetEntrance.transform.position;
-            Camera.main.transform.position = cameraPositionPreset + targetMap.transform.position;
+            GameManager.instance.ChangeRoomCamera(targetMap.transform.position);
         }
     }
 }

@@ -21,12 +21,9 @@ public class Map : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private GameObject[] doors;
-    [SerializeField]
-    private GameObject[] wallCenters;
-    [SerializeField]
-    private GameObject[] portals;
+    [SerializeField] protected GameObject[] doors;
+    [SerializeField] protected GameObject[] wallCenters;
+    [SerializeField] protected GameObject[] portals;
 
     public bool isRoomEnd;
 
@@ -34,10 +31,15 @@ public class Map : MonoBehaviour
     public float doorLowerPartPosY = -5f;
     public float doorOpenSpeed = 0.1f;
 
+    private bool isNotVisited;
+    private float waitForFirstVisit = 1.2f;
+    private float waitForRevisit = 0.7f;
+
     // ¹® Ã³¸®
     private void Start()
     {
         ActiveDoor();
+        isNotVisited = true;
     }
 
     private void Update()
@@ -48,9 +50,9 @@ public class Map : MonoBehaviour
         }
     }
 
-    private void ActiveDoor()
+    protected virtual void ActiveDoor()
     {
-        for(int direction = 0; direction < 4; direction++)
+        for (int direction = 0; direction < 4; direction++)
         {
             if (neighborMap[direction] != null)
             {
@@ -118,11 +120,59 @@ public class Map : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            if (isNotVisited)
+            {
+                StartRoom();
+                isNotVisited = false;
+            }
+            else
+            {
+                RevisitRoom();
+            }
+
             EndRoom();
         }
     }
 
-    public void EndRoom()
+    private void StartRoom()
+    {
+        StartCoroutine(StartRoomCoroutine());
+    }
+
+    private IEnumerator StartRoomCoroutine()
+    {
+        GameManager.instance.SetPostProcessDOFFocalLength(GameManager.instance.maxGrainIntensity);
+        GameManager.instance.SetPostProcessGrainIntensity(GameManager.instance.maxDOFFocalLength);
+
+        Time.timeScale = 0f;
+
+        for (float remainTime = waitForFirstVisit; remainTime >= 0; remainTime -= 0.01f)
+        {
+            float percent = remainTime / waitForFirstVisit;
+            GameManager.instance.SetPostProcessDOFFocalLength(GameManager.instance.maxDOFFocalLength * percent);
+            GameManager.instance.SetPostProcessGrainIntensity(GameManager.instance.maxGrainIntensity * percent);
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        GameManager.instance.SetPostProcessDOFFocalLength(0f);
+        GameManager.instance.SetPostProcessGrainIntensity(0f);
+        Time.timeScale = 1f;
+    }
+    private void RevisitRoom()
+    {
+        StartCoroutine(RevisitRoomCoroutine());
+    }
+
+    private IEnumerator RevisitRoomCoroutine()
+    {
+
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(waitForRevisit);
+        Time.timeScale = 1f;
+    }
+
+
+    private void EndRoom()
     {
         isRoomEnd = true;
     }
