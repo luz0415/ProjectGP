@@ -32,6 +32,7 @@ public class TestPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         myRigid = GetComponent<Rigidbody>();
         applySpeed = walkSpeed;
         capsuleCollider = GetComponent<CapsuleCollider>();

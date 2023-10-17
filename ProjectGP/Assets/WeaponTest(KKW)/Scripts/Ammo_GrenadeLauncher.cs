@@ -5,14 +5,15 @@ using UnityEngine;
 public class Ammo_GrenadeLauncher : MonoBehaviour
 {
 
-    public float power = 2;
-    public Vector3 Target;
-    public Vector3 mouseP;
-    public float firingAngle = 45.0f;
-    public float gravity = 9.8f;
-    public Vector3 mousePosition;
+    public float power = 2;             // 발사 속도에 관여
+    public Vector3 Target;              // 날아갈 위치
 
-    public Transform Projectile;
+    public float firingAngle = 45.0f;   // 발사각
+    public float gravity = 9.8f;        // 중력값
+
+    public Vector3 mousePosition;       // 마우스 포인터
+
+    public Transform Projectile;        // 유탄
     private Transform myTransform;
 
     void Awake()
@@ -26,7 +27,7 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
     }
 
     private void Update()
-    {
+    {       
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 화면 좌표에서 출발해 카메라를 통해 월드좌표로 발사할 Ray
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit)) // Ray가 발사해 맞았다면
@@ -34,13 +35,13 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
                 mousePosition = hit.point; // mousePosition에 맞은 월드좌표 대입
             }
 
-            Target = mousePosition;
+            Target = mousePosition;        
     }
 
-
+    // 유탄 발사 로직
     IEnumerator SimulateProjectile()
     {
-       
+        yield return new WaitForSeconds(0.1f);
 
         // Move projectile to the position of throwing object + add some offset if needed.
         Projectile.position = myTransform.position + new Vector3(0, 0.0f, 0);
@@ -71,5 +72,8 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
 
             yield return null;
         }
+
+
+       
     }
 }

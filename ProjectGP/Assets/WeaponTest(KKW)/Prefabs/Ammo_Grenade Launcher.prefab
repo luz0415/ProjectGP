@@ -45,10 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c04009320bc14e4aa9273b5ab42e9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 4
+  power: 5
   Target: {x: 0, y: 0, z: 0}
-  mouseP: {x: 0, y: 0, z: 0}
-  firingAngle: 30
+  firingAngle: 40
   gravity: 9.8
   mousePosition: {x: 0, y: 0, z: 0}
   Projectile: {fileID: 1714481885786273989}
