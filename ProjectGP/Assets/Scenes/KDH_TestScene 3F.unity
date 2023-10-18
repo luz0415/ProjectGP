@@ -607,7 +607,7 @@ GameObject:
   - component: {fileID: 1711205011}
   - component: {fileID: 1711205010}
   m_Layer: 0
-  m_Name: 2F Map Spawner
+  m_Name: 3F Map Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -625,19 +625,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8917b8d59b8a89408663b46a166cde1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nowFloor: 2
+  nowFloor: 3
   maxRoomRandomNumber: 2
   baseRoomPos: {x: 0, y: 0, z: 0}
   distanceBetRoom: 100
   floorPlanX: 9
   floorPlanY: 8
   combatMapPrefabs:
-  - {fileID: 5902009287043220134, guid: f8f5b535ff4713441b71907764790cd1, type: 3}
-  - {fileID: 6919063224736880029, guid: 69c77bc5b2e10f648b517a7b3f0ec1f2, type: 3}
-  - {fileID: 6919063224736880029, guid: 6d500f05b13bb5c449d12ea1b0a7b5ce, type: 3}
+  - {fileID: 5902009287043220134, guid: 0392bfb0f3fc5984aaba9a0f5ad20c2d, type: 3}
+  - {fileID: 5902009287043220134, guid: 5dbecaf852f23a544a8d7b2bb33a1cc4, type: 3}
+  - {fileID: 5902009287043220134, guid: dc5110d1f64dbb943b85f8d449e2c333, type: 3}
   specialMapPrefabs:
-  - {fileID: 5902009287043220134, guid: db5ba70256c9f9f44acee233079c8516, type: 3}
-  - {fileID: 5902009287043220134, guid: 58be74ca2aa85fa47a91557717369d37, type: 3}
+  - {fileID: 5902009287043220134, guid: e021629bce047d543a173f9c987f811a, type: 3}
+  - {fileID: 5902009287043220134, guid: a14ba07d35c17464d940809711b39091, type: 3}
   - {fileID: 961004321117050524, guid: 3777441f456601346827109f1feaf46c, type: 3}
 --- !u!4 &1711205011
 Transform:

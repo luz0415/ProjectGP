@@ -10,8 +10,9 @@ public class StairPortal : MonoBehaviour
 
     private void Start()
     {
-        lastFloorSceneIndex = SceneManager.sceneCount;
+        lastFloorSceneIndex = SceneManager.sceneCountInBuildSettings;
         nowSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        print(lastFloorSceneIndex);
     }
 
     private void OnTriggerEnter(Collider other)
