@@ -117,7 +117,7 @@ public class TestPlayer : MonoBehaviour
         myRigid.rotation = Quaternion.Lerp(myRigid.rotation, Quaternion.LookRotation(rotatePosition), lookSensitivity * Time.deltaTime);
        //    print(myRigid.rotation);
     }
-
+   
     bool CheckHitWall(Vector3 movement)
     {
         // scope로 ray 충돌을 확인할 범위를 지정할 수 있다.

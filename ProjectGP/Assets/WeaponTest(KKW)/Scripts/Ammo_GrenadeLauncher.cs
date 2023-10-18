@@ -22,7 +22,9 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
     // 속도 구하기 위한 변수
     private Vector3 oldPosition;
     private Vector3 currentPosition;
-    private double velocity;
+    public double velocity;
+
+
 
     void Awake()
     {
@@ -31,15 +33,53 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
 
     void Start()
     {
+        transform.RotateAround(transform.position, transform.right, -45);
+
         oldPosition = transform.position;
 
-        StartCoroutine(SimulateProjectile());
+        SetTarget();
+
+        StartCoroutine(pomulsun());
     }
 
-    private void Update()
+    private void OnTriggerEnter(Collider other)
+    {                
+            Destroy(gameObject);
+            Instantiate(_VFX, transform.position, Quaternion.identity);
+    }
+
+    IEnumerator pomulsun()
     {
-        SetTarget();
-        SetVelocity_Y();
+        Vector3 start = transform.position; //현재 위치
+        Vector3 end = Target; //끝나는 위치
+
+        float jumpTime = Mathf.Max(0.3f, Vector3.Distance(start, end) / power); //거리분의 속력을 해서 시간을 얻어냄 (거,속,시)
+
+
+        float currentTime = 0f;
+        float percent = 0f;
+        //y방향의 초기속도
+        float v0 = (end - start).y + power;
+
+        while (true)
+        {
+            currentTime += Time.deltaTime;
+            percent = currentTime / jumpTime; //percent는 currentTime == jumpTime이 되어야 1이 된다
+
+            Vector3 position = Vector3.Lerp(start, end, percent); //자연스럽게 이동하기 위해 Lerp사용, percent만큼 이동
+
+            //포물선 운동 : 시작위치 + 초기속도*시간 + 중력*시간제곱
+            if(jumpTime <= 0.3f)
+                position.y = start.y - (gravity * percent * percent);
+            else
+                position.y = start.y + (v0 * percent) - (gravity * percent * percent);
+
+            transform.position = position;
+
+            transform.RotateAround(transform.position, transform.right, Time.deltaTime * 90/jumpTime);
+
+            yield return null;
+        }
 
     }
 
@@ -60,50 +100,8 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
     {
         currentPosition = transform.position;
         var dis = (currentPosition - oldPosition);
-        var distance = Math.Sqrt(Math.Pow(dis.x, 2) + Math.Pow(dis.y, 2) + Math.Pow(dis.z, 2));
+        var distance = dis.y;
         velocity = distance / Time.deltaTime;
         oldPosition = currentPosition;
-    }
-
-    // 유탄 발사 로직
-    IEnumerator SimulateProjectile()
-    {
-        yield return new WaitForSeconds(0.1f);
-
-        // Move projectile to the position of throwing object + add some offset if needed.
-        Projectile.position = myTransform.position + new Vector3(0, 0.0f, 0);
-
-        // Calculate distance to target
-        float target_Distance = Vector3.Distance(Projectile.position, Target);
-
-        // Calculate the velocity needed to throw the object to the target at specified angle.
-        float projectile_Velocity = power * (target_Distance / (Mathf.Sin(2 * firingAngle * Mathf.Deg2Rad) / gravity));
-
-        // Extract the X  Y componenent of the velocity
-        float Vx = Mathf.Sqrt(projectile_Velocity) * Mathf.Cos(firingAngle * Mathf.Deg2Rad);
-        float Vy = Mathf.Sqrt(projectile_Velocity) * Mathf.Sin(firingAngle * Mathf.Deg2Rad);
-
-        // Calculate flight time.
-        float flightDuration = target_Distance / Vx;
-
-        // Rotate projectile to face the target.
-        Projectile.rotation = Quaternion.LookRotation(Target - Projectile.position);
-
-        float elapse_time = 0;
-
-        while (elapse_time < flightDuration)
-        {
-            Projectile.Translate(0, (Vy - power * (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
-
-            Projectile.rotation = Quaternion.LookRotation(Target - Projectile.position);
-         
-
-            elapse_time += Time.deltaTime;
-
-            yield return null;
-        }
-
-        Instantiate(_VFX, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 }
