@@ -36,18 +36,10 @@ public class Map : MonoBehaviour
     private float waitForRevisit = 0.7f;
 
     // ¹® Ã³¸®
-    private void Start()
+    protected virtual void Start()
     {
         ActiveDoor();
         isNotVisited = true;
-    }
-
-    private void Update()
-    {
-        if (isRoomEnd)
-        {
-            OpenDoor();
-        }
     }
 
     protected virtual void ActiveDoor()
@@ -134,7 +126,7 @@ public class Map : MonoBehaviour
         }
     }
 
-    private void StartRoom()
+    protected virtual void StartRoom()
     {
         StartCoroutine(StartRoomCoroutine());
     }
@@ -171,9 +163,8 @@ public class Map : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-
-    private void EndRoom()
+    protected virtual void EndRoom()
     {
-        isRoomEnd = true;
+        OpenDoor();
     }
 }

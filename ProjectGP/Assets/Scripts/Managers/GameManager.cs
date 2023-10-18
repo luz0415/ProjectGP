@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public bool isGameOver;
     private CameraController cameraController;
     private PostProcessVolume roomChangePostProcess;
+    public Player player;
 
     public float maxGrainIntensity = 1.0f;
     public float maxDOFFocalLength = 300.0f;
@@ -36,12 +37,19 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         isGameOver = false;
 
-        cameraController = FindObjectOfType<CameraController>();
-        roomChangePostProcess = FindObjectOfType<PostProcessVolume>();
+        DontDestoryObjects();
+        InitializePostProcessing();
+    }
 
+    private void DontDestoryObjects()
+    {
         DontDestroyOnLoad(cameraController.gameObject);
         DontDestroyOnLoad(roomChangePostProcess.gameObject);
+        DontDestroyOnLoad(player.gameObject);
+    }
 
+    private void InitializePostProcessing()
+    {
         SetPostProcessDOFFocalLength(0f);
         SetPostProcessGrainIntensity(0f);
     }
