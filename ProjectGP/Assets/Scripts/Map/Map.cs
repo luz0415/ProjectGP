@@ -31,7 +31,7 @@ public class Map : MonoBehaviour
     public float doorLowerPartPosY = -5f;
     public float doorOpenSpeed = 0.1f;
 
-    private bool isNotVisited;
+    private bool isNotVisited = true;
     private float waitForFirstVisit = 1.2f;
     private float waitForRevisit = 0.7f;
 
@@ -39,7 +39,6 @@ public class Map : MonoBehaviour
     protected virtual void Start()
     {
         ActiveDoor();
-        isNotVisited = true;
     }
 
     protected virtual void ActiveDoor()
@@ -107,31 +106,29 @@ public class Map : MonoBehaviour
 
         }
     }
-
     private void OnTriggerEnter(Collider other)
     {
+        print("HI!");
         if(other.tag == "Player")
         {
             if (isNotVisited)
             {
-                StartRoom();
+                EnterRoom();
                 isNotVisited = false;
             }
             else
             {
-                RevisitRoom();
+                //RevisitRoom();
             }
-
-            EndRoom();
         }
     }
 
-    protected virtual void StartRoom()
+    protected virtual void EnterRoom()
     {
-        StartCoroutine(StartRoomCoroutine());
+        StartCoroutine(EnterRoomCoroutine());
     }
 
-    private IEnumerator StartRoomCoroutine()
+    private IEnumerator EnterRoomCoroutine()
     {
         GameManager.instance.SetPostProcessDOFFocalLength(GameManager.instance.maxGrainIntensity);
         GameManager.instance.SetPostProcessGrainIntensity(GameManager.instance.maxDOFFocalLength);
@@ -150,6 +147,7 @@ public class Map : MonoBehaviour
         GameManager.instance.SetPostProcessGrainIntensity(0f);
         Time.timeScale = 1f;
     }
+
     private void RevisitRoom()
     {
         StartCoroutine(RevisitRoomCoroutine());

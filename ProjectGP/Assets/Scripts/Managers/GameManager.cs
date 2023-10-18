@@ -21,12 +21,16 @@ public class GameManager : MonoBehaviour
     private static GameManager m_instance;
 
     public bool isGameOver;
-    private CameraController cameraController;
-    private PostProcessVolume roomChangePostProcess;
+    public CameraController cameraController;
+    public PostProcessVolume roomChangePostProcess;
     public Player player;
+
+    public Vector3 playerStartPos;
 
     public float maxGrainIntensity = 1.0f;
     public float maxDOFFocalLength = 300.0f;
+
+    private bool callOnce = false;
 
     private void Awake()
     {
@@ -37,8 +41,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         isGameOver = false;
 
-        DontDestoryObjects();
-        InitializePostProcessing();
+        if (!callOnce)
+        {
+            callOnce = true;
+            DontDestoryObjects();
+            InitializePostProcessing();
+        }
     }
 
     private void DontDestoryObjects()
@@ -77,5 +85,13 @@ public class GameManager : MonoBehaviour
         DepthOfField dof;
         roomChangePostProcess.profile.TryGetSettings(out dof);
         dof.focalLength.value = focalLength;
+    }
+
+    public void ChangeScene()
+    {
+        ChangeRoomCamera(Vector3.zero);
+        player.transform.position = playerStartPos;
+        print(Time.timeScale);
+        Time.timeScale = 1f;
     }
 }

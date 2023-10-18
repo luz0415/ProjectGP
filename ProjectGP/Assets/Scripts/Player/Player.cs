@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
         myRigid = GetComponent<Rigidbody>();
         applySpeed = walkSpeed;
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -72,6 +71,10 @@ public class Player : MonoBehaviour
     {
         float _moveDirX = Input.GetAxisRaw("Horizontal");
         float _moveDirZ = Input.GetAxisRaw("Vertical");
+        if(_moveDirX == 0 && _moveDirZ == 0)
+        {
+            myRigid.velocity = Vector3.zero;
+        }
 
         Vector3 _moveHorizontal = Vector3.right * _moveDirX;
         Vector3 _moveVertical = Vector3.forward * _moveDirZ;

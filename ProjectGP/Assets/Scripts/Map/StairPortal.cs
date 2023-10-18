@@ -20,8 +20,8 @@ public class StairPortal : MonoBehaviour
         {
             if(nowSceneIndex != lastFloorSceneIndex)
             {
+                GameManager.instance.ChangeScene();
                 SceneManager.LoadScene(nowSceneIndex + 1);
-                GameManager.instance.ChangeRoomCamera(Vector3.zero);
             }
         }
     }

@@ -30,6 +30,11 @@ public class CameraController : MonoBehaviour
 
     public void ChangeActiveCamera()
     {
+        if (activedCam == null)
+        {
+            return;
+        }
+
         if (activedCam == vCams[0])
         {
             vCams[0].Priority--;

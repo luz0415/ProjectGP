@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapRotator : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
         RotateMap();
     }

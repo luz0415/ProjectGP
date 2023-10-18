@@ -12,15 +12,16 @@ public class Enemy_Move : MonoBehaviour
     public float moveSpeed = 5f;       // 적 ai 이동 속도
 
     private Rigidbody Rigid;
-    public NavMeshAgent agent;
+    private NavMeshAgent agent;
 
-    public Transform target;
+    private Transform target;
     private bool isAttacking = false; 
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         Rigid = GetComponent<Rigidbody>();
+        target = GameManager.instance.player.transform;
         agent.speed = moveSpeed;
         agent.stoppingDistance = attackRange; // 도착한 목적지 = 공격 범위 시작
     }
@@ -67,7 +68,6 @@ public class Enemy_Move : MonoBehaviour
     void Attack()
     {
         // 공격 로직 구현하는 곳
-        Debug.Log("공격!");
     }
 
 }
