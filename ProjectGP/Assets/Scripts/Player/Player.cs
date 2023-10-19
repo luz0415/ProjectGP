@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (GameManager.instance != null && GameManager.instance.isGamePaused) return;
+
         TryRun();
         Move();
         CharacterRotation();

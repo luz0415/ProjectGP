@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CombatMap : Map
 {
@@ -53,9 +54,10 @@ public class CombatMap : Map
         for(int i = 0; i < enemyNumber; i++)
         {
             Vector3 spawnPoint = EnemyCenterSpawnPoints[Random.Range(0, EnemyCenterSpawnPoints.Length)].position;
+            Quaternion spawnRotation = Quaternion.Euler(0f, Random.Range(0, 360), 0f);
             GameObject enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
 
-            SpawnEnemy(enemy, spawnPoint);
+            SpawnEnemy(enemy, RandomPoint(spawnPoint, 1.0f), spawnRotation);
         }
     }
 
@@ -64,15 +66,33 @@ public class CombatMap : Map
         for (int i = 0; i < enemyNumber; i++)
         {
             Vector3 spawnPoint = EnemySuburbSpawnPoints[Random.Range(0, EnemySuburbSpawnPoints.Length)].position;
+            Quaternion spawnRotation = Quaternion.Euler(0f, Random.Range(0, 360), 0f);
             GameObject enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
 
-            SpawnEnemy(enemy, spawnPoint);
+            SpawnEnemy(enemy, RandomPoint(spawnPoint, 1.0f), spawnRotation);
         }
     }
 
-    private void SpawnEnemy(GameObject enemy, Vector3 spawnPos)
+    Vector3 RandomPoint(Vector3 center, float range)
     {
-        Enemy newEnemy = Instantiate(enemy, spawnPos, Quaternion.identity).GetComponent<Enemy>();
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomDirection = new Vector3(Random.value, 0f, Random.value).normalized;
+            Vector3 randomPoint = center + randomDirection * range;
+            NavMeshHit hit;
+
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+        }
+
+        return Vector3.zero;
+    }
+
+    private void SpawnEnemy(GameObject enemy, Vector3 spawnPos, Quaternion spawnRotation)
+    {
+        Enemy newEnemy = Instantiate(enemy, spawnPos, spawnRotation).GetComponent<Enemy>();
         newEnemy.onDeath += DecreaseEnemyCount;
     }
 

@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     private static GameManager m_instance;
 
     public bool isGameOver;
+    public bool isGamePaused;
+
     public CameraController cameraController;
     public PostProcessVolume roomChangePostProcess;
     public Player player;
@@ -40,6 +42,7 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
         isGameOver = false;
+        isGamePaused = false;
 
         if (!callOnce)
         {

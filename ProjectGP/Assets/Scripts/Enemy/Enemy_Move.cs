@@ -29,6 +29,8 @@ public class Enemy_Move : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance != null && GameManager.instance.isGamePaused) return;
+
         // 플레이어가 추적 범위 내에 있는지 확인한다.
         float distanceToPlayer = Vector3.Distance(transform.position, target.position);
 

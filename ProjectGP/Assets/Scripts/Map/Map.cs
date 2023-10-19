@@ -108,7 +108,6 @@ public class Map : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        print("HI!");
         if(other.tag == "Player")
         {
             if (isNotVisited)
@@ -133,7 +132,7 @@ public class Map : MonoBehaviour
         GameManager.instance.SetPostProcessDOFFocalLength(GameManager.instance.maxGrainIntensity);
         GameManager.instance.SetPostProcessGrainIntensity(GameManager.instance.maxDOFFocalLength);
 
-        Time.timeScale = 0f;
+        GameManager.instance.isGamePaused = true;
 
         for (float remainTime = waitForFirstVisit; remainTime >= 0; remainTime -= 0.01f)
         {
@@ -143,9 +142,10 @@ public class Map : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.01f);
         }
 
+        GameManager.instance.isGamePaused = false;
+
         GameManager.instance.SetPostProcessDOFFocalLength(0f);
         GameManager.instance.SetPostProcessGrainIntensity(0f);
-        Time.timeScale = 1f;
     }
 
     private void RevisitRoom()
@@ -155,10 +155,9 @@ public class Map : MonoBehaviour
 
     private IEnumerator RevisitRoomCoroutine()
     {
-
-        Time.timeScale = 0f;
+        GameManager.instance.isGamePaused = true;
         yield return new WaitForSecondsRealtime(waitForRevisit);
-        Time.timeScale = 1f;
+        GameManager.instance.isGamePaused = false;
     }
 
     protected virtual void EndRoom()

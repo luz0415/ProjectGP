@@ -9,9 +9,9 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (onDeath != null) onDeath();
         if (other.tag == "Player")
         {
+            if (onDeath != null) onDeath();
             Destroy(gameObject);
         }
     }
