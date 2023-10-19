@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Coin : MonoBehaviour, IItem
 {
     private ParticleSystem particle;
     public GameObject pickupEffect;
@@ -14,18 +14,15 @@ public class Coin : MonoBehaviour
         particle.Play();
     }
 
-    void OnTriggerEnter(Collider other)
+    public void Use(GameObject target)
     {
-        if (other.CompareTag("Player"))
-        {
-            GetCoin(other.gameObject.GetComponent<PlayerCoin>());
-            Pickup();
-        }
+        GetCoin(target.GetComponent<PlayerItem>());
+        Pickup();
     }
 
-    private void GetCoin(PlayerCoin playerCoin)
+    private void GetCoin(PlayerItem playerItem)
     {
-        playerCoin.coin = coin;
+        playerItem.coin += coin;
     }
 
     void Pickup()

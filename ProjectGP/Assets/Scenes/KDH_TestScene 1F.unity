@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameOver: 0
+  isGamePaused: 0
   cameraController: {fileID: 1030680214}
   roomChangePostProcess: {fileID: 998367200}
   player: {fileID: 829855943}
