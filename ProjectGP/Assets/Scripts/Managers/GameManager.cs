@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
     {
         ChangeRoomCamera(Vector3.zero);
         player.transform.position = playerStartPos;
-        print(Time.timeScale);
         Time.timeScale = 1f;
     }
 }

@@ -93,6 +93,7 @@ public class CombatMap : Map
     private void SpawnEnemy(GameObject enemy, Vector3 spawnPos, Quaternion spawnRotation)
     {
         Enemy newEnemy = Instantiate(enemy, spawnPos, spawnRotation).GetComponent<Enemy>();
+        newEnemy.transform.parent = GameManager.instance.transform;
         newEnemy.onDeath += DecreaseEnemyCount;
     }
 
