@@ -11,6 +11,7 @@ public class ItemInShop : MonoBehaviour
     public string itemName;
     public string itemDescription;
 
+    private string itemString;
     public TextMeshPro itemText;
     private IItem item;
     private GameObject targetObject;
@@ -22,7 +23,10 @@ public class ItemInShop : MonoBehaviour
     private void Start()
     {
         item = GetComponent<IItem>();
+        itemString = CreateItemText();
+        itemText.text = itemString;
 
+        itemText.fontSize = 1.5f;
         canBuy = false;
     }
 
@@ -57,12 +61,10 @@ public class ItemInShop : MonoBehaviour
 
             itemText.gameObject.SetActive(true);
 
-            itemText.text = CreateItemText();
             if (playerItem.coin < cost)
             {
                 itemText.color = Color.red;
             }
-
 
             canBuy = true;
         }

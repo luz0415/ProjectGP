@@ -15,7 +15,9 @@ public class Enemy_Move : MonoBehaviour
     private NavMeshAgent agent;
 
     private Transform target;
-    private bool isAttacking = false; 
+    private bool isAttacking = false;
+
+    private Enemy enemy;
 
     void Start()
     {
@@ -24,12 +26,15 @@ public class Enemy_Move : MonoBehaviour
         target = GameManager.instance.player.transform;
         agent.speed = moveSpeed;
         agent.stoppingDistance = attackRange; // 도착한 목적지 = 공격 범위 시작
+
+        enemy = GetComponent<Enemy>();
     }
 
 
     void Update()
     {
         if (GameManager.instance != null && GameManager.instance.isGamePaused) return;
+        if (enemy.dead) return;
 
         // 플레이어가 추적 범위 내에 있는지 확인한다.
         float distanceToPlayer = Vector3.Distance(transform.position, target.position);

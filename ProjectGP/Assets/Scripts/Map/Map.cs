@@ -77,7 +77,7 @@ public class Map : MonoBehaviour
         }
     }
 
-    private void OpenDoor()
+    protected virtual void OpenDoor()
     {
         foreach(var door in doors)
         {
@@ -106,6 +106,7 @@ public class Map : MonoBehaviour
 
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
@@ -117,7 +118,7 @@ public class Map : MonoBehaviour
             }
             else
             {
-                //RevisitRoom();
+                RevisitRoom();
             }
         }
     }
@@ -148,9 +149,9 @@ public class Map : MonoBehaviour
         GameManager.instance.SetPostProcessGrainIntensity(0f);
     }
 
-    private void RevisitRoom()
+    protected virtual void RevisitRoom()
     {
-        StartCoroutine(RevisitRoomCoroutine());
+        //StartCoroutine(RevisitRoomCoroutine());
     }
 
     private IEnumerator RevisitRoomCoroutine()
