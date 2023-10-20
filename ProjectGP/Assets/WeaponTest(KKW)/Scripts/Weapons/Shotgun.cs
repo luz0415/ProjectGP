@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class GrenadeLauncher : MonoBehaviour
+public class Shotgun : MonoBehaviour
 {
     public float maxBullet;     // ÃÖ´ë ÃÑ¾Ë ¼ö
     float currentBullet;        // ÇöÀç ³²Àº ÃÑ¾Ë ¼ö
@@ -17,8 +16,13 @@ public class GrenadeLauncher : MonoBehaviour
     public GameObject player;   // ÇÃ·¹ÀÌ¾î
     public TestPlayer testPlayer;
 
+    // ÃÑ SFX °ü·Ã
     public AudioClip fireSFX;
     private AudioSource source = null;
+
+    // ÃÑ±¸ È­¿° °ü·Ã
+    public ParticleSystem muzzleFlash;
+    private WFX_LightFlicker _light;
 
     void Start()
     {
@@ -26,6 +30,17 @@ public class GrenadeLauncher : MonoBehaviour
         currentDamp = 0;
 
         source = GetComponent<AudioSource>();
+        _light = GetComponentInChildren<WFX_LightFlicker>();
+    }
+    void Update()
+    {
+        currentDamp -= Time.deltaTime;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Fire");
+            BulletFire();
+        }
     }
 
     void BulletFire()
@@ -38,8 +53,14 @@ public class GrenadeLauncher : MonoBehaviour
             currentDamp = fireDamp;
             currentBullet--;
 
+            // ÃÑ ¼Ò¸®
             source.PlayOneShot(fireSFX);
 
+            // ÃÑ±¸ È­¿° ±¸Çö
+            _light.MuzzleLight();
+            StartCoroutine("MuzzleFlash");
+
+            // ÃÑ¾Ë ÀÎ½ºÅÏ½ºÈ­
             Instantiate(bullet, firePos.position, player.transform.rotation);
         }
         // ÃÑ¾Ë ´Ù ¾´ °æ¿ì ÀçÀåÀü
@@ -54,6 +75,15 @@ public class GrenadeLauncher : MonoBehaviour
         }
     }
 
+    IEnumerator MuzzleFlash()
+    {
+        muzzleFlash.Play();
+
+        yield return new WaitForSeconds(0.1f);
+
+        muzzleFlash.Stop();
+    }
+
     IEnumerator ReloadBullet()
     {
         for (float i = reloadTime; i > 0; i -= 0.1f)
@@ -66,13 +96,5 @@ public class GrenadeLauncher : MonoBehaviour
         currentBullet = maxBullet;
     }
 
-    void Update()
-    {
-        currentDamp -= Time.deltaTime;
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Fire");
-            BulletFire();
-        }
-    }
+   
 }

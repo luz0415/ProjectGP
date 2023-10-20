@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Rifle : MonoBehaviour
+public class GrenadeLauncher : MonoBehaviour
 {
     public float maxBullet;     // ÃÖ´ë ÃÑ¾Ë ¼ö
     float currentBullet;        // ÇöÀç ³²Àº ÃÑ¾Ë ¼ö
@@ -16,8 +16,14 @@ public class Rifle : MonoBehaviour
     public Transform firePos;   // ÃÑ±¸ À§Ä¡
     public GameObject player;   // ÇÃ·¹ÀÌ¾î
     public TestPlayer testPlayer;
+
+    // ÃÑ SFX °ü·Ã
     public AudioClip fireSFX;
     private AudioSource source = null;
+
+    // ÃÑ±¸ È­¿° °ü·Ã
+    public ParticleSystem muzzleFlash;
+    private WFX_LightFlicker _light;
 
     void Start()
     {
@@ -25,37 +31,62 @@ public class Rifle : MonoBehaviour
         currentDamp = 0;
 
         source = GetComponent<AudioSource>();
+        _light = GetComponentInChildren<WFX_LightFlicker>();
     }
-    
+
+    void Update()
+    {
+        currentDamp -= Time.deltaTime;
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Fire");
+            BulletFire();
+        }
+    }
+
     void BulletFire()
     {
         // currentDamp¸¶´Ù ÃÑ ¹ß»ç
-        if(currentDamp <= 0 && currentBullet >0 && !isReload)
+        if (currentDamp <= 0 && currentBullet > 0 && !isReload)
         {
             testPlayer.animator.SetTrigger("shot");
 
             currentDamp = fireDamp;
             currentBullet--;
 
+            // ÃÑ ¼Ò¸®
             source.PlayOneShot(fireSFX);
 
+            // ÃÑ±¸ È­¿° ±¸Çö
+            _light.MuzzleLight();
+            StartCoroutine("MuzzleFlash");
+
+            // ÃÑ¾Ë ÀÎ½ºÅÏ½ºÈ­
             Instantiate(bullet, firePos.position, player.transform.rotation);
-        } 
+        }
         // ÃÑ¾Ë ´Ù ¾´ °æ¿ì ÀçÀåÀü
-        else if(currentBullet <= 0 && !isReload)
+        else if (currentBullet <= 0 && !isReload)
         {
             testPlayer.animator.SetTrigger("reload");
 
             Debug.Log("Reload Start");
             isReload = true;
             StartCoroutine(ReloadBullet());
-           
+
         }
+    }
+    IEnumerator MuzzleFlash()
+    {
+        muzzleFlash.Play();
+
+        yield return new WaitForSeconds(0.1f);
+
+        muzzleFlash.Stop();
     }
 
     IEnumerator ReloadBullet()
     {
-        for(float i = reloadTime; i > 0; i -= 0.1f)
+        for (float i = reloadTime; i > 0; i -= 0.1f)
         {
             yield return new WaitForSeconds(0.1f);
         }
@@ -63,15 +94,5 @@ public class Rifle : MonoBehaviour
         Debug.Log("Reload End");
         isReload = false;
         currentBullet = maxBullet;
-    }
-
-    void Update()
-    {
-        currentDamp -= Time.deltaTime;
-        if(Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Fire");
-            BulletFire();
-        }
     }
 }
