@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Wep_Ammo_Pistol_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1389736266729900, guid: 2f202e56118db1b489c056792aa07e45, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4256256677836720, guid: 2f202e56118db1b489c056792aa07e45, type: 3}
       propertyPath: m_RootOrder
       value: 0
