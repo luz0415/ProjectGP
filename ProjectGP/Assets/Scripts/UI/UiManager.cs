@@ -4,26 +4,52 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Runtime.ExceptionServices;
 
 public class UiManager : MonoBehaviour
 {
+    public static UiManager instance
+    {
+        get
+        {
+            if (m_instance == null)
+            {
+                m_instance = FindObjectOfType<UiManager>();
+            }
+            return m_instance;
+        }
+    }
+
+    private static UiManager m_instance;
+
     public GameObject OptionMenu;
-    public PlayerItem playerItem;
     public TextMeshProUGUI playerCoin;
 
-    public Image[] UIhealth;
+    public RectTransform UIHeart;
+    public GameObject heartPrefab;
+    private List<Image> hearts = new List<Image>();
 
     public int health;
     bool OptionMenu_On = false;
+
+    private void Awake()
+    {
+        if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
         OptionMenu.SetActive(false);
 
-        for(int i = 0; i < health; i++)
-        {
-            UIhealth[i].color = new Color(0.915f, 0.39f, 0.39f, 1);
-        }
+        health = 0;
+
+        int maxHealth = GameManager.instance.player.GetComponent<PlayerHP>().startingHP;
+        MaxHealthUp(maxHealth);
+        SetCoinUI(0);
     }
 
     public void SceneChange() // -------------------------------------------------시작화면
@@ -52,16 +78,61 @@ public class UiManager : MonoBehaviour
         OptionMenu_On = false;
     } // -------------------------------------------------시작화면
 
-    public void HealthDown()
+    public void HealthDown(int downHealth)
     {
-        health--;
-        UIhealth[health].color = new Color(0, 0, 0, 0.4f);
+        for (int i = 0; i < downHealth; i++)
+        {
+            if (health == 0) return;
+            health--;
+            hearts[health].color = new Color(0, 0, 0, 0.4f);
+        }
     }
 
-    public void HealthUp()
+    public void HealthUp(int upHealth)
     {
-        UIhealth[health].color = new Color(0.915f, 0.39f, 0.39f, 1);
-        health++;
+        for(int i = 0; i < upHealth; i++)
+        {
+            if (health == hearts.Count) return;
+            hearts[health].color = new Color(0.915f, 0.39f, 0.39f, 1);
+            health++;
+        }
+    }
+
+    public void MaxHealthDown(int downHealth)
+    {
+        if (health == 1) return;
+        for (int i = 0; i < downHealth; i++)
+        {
+            GameObject destroyObject = hearts[hearts.Count - 1].gameObject;
+            health--;
+            hearts.RemoveAt(health);
+            Destroy(destroyObject);
+        }
+    }
+
+    public void MaxHealthUp(int upHealth)
+    {
+        for (int i = 0; i < upHealth; i++)
+        {
+            Image newHealth;
+            if (health == 0)
+            {
+                Vector3 newHealthPosition = new Vector3(90f, 995f, 0f);
+                newHealth = Instantiate(heartPrefab, newHealthPosition, Quaternion.identity).GetComponent<Image>();
+            }
+            else
+            {
+                Vector3 newHealthPosition =
+                    new Vector3(hearts[hearts.Count - 1].rectTransform.position.x + 100, hearts[hearts.Count - 1].rectTransform.position.y, hearts[hearts.Count - 1].rectTransform.position.z);
+                newHealth = Instantiate(hearts[hearts.Count - 1].gameObject, newHealthPosition, Quaternion.identity).GetComponent<Image>();
+            }
+            
+            hearts.Add(newHealth);
+            newHealth.rectTransform.parent = UIHeart;
+            newHealth.color = new Color(0, 0, 0, 0.4f);
+             
+            HealthUp(1);
+        }
     }
 
     void Option_off()
@@ -76,9 +147,13 @@ public class UiManager : MonoBehaviour
         OptionMenu_On = true;
     }
 
+    public void SetCoinUI(int coin)
+    {
+        playerCoin.text = string.Format("{0:n0}", coin);
+    }
+
     void LateUpdate()
     {
-        playerCoin.text = string.Format("{0:n0}", playerItem.coin);
 
         if(Input.GetKeyDown(KeyCode.Escape)) 
         {
@@ -86,14 +161,6 @@ public class UiManager : MonoBehaviour
                Option_off();
             else
                 Option_on();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            HealthDown();
-        }
-        else if (Input.GetKeyDown(KeyCode.U)) 
-        {
-            HealthUp();
         }
     }
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class LivingEntity : MonoBehaviour
 {
-    public float startingHP = 3f;
-    public float HP { get; protected set; }
+    public int startingHP = 3;
+    public int HP { get; protected set; }
     public bool dead { get; protected set; }
     public event Action onDeath;
 
@@ -14,7 +14,7 @@ public class LivingEntity : MonoBehaviour
         HP = startingHP;
     }
 
-    public virtual void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public virtual void OnDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         HP -= damage;
         if (HP <= 0 && !dead)
@@ -23,7 +23,7 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
-    public virtual void RestoreHP(float restoreHP)
+    public virtual void RestoreHP(int restoreHP)
     {
         if (dead) return;
 
