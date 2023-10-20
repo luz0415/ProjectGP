@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UiManager : MonoBehaviour
 {
     public GameObject OptionMenu;
+    public PlayerItem playerItem;
+    public TextMeshProUGUI playerCoin;
 
     public Image[] UIhealth;
 
@@ -16,6 +19,11 @@ public class UiManager : MonoBehaviour
     void Start()
     {
         OptionMenu.SetActive(false);
+
+        for(int i = 0; i < health; i++)
+        {
+            UIhealth[i].color = new Color(0.915f, 0.39f, 0.39f, 1);
+        }
     }
 
     public void SceneChange() // -------------------------------------------------시작화면
@@ -68,16 +76,18 @@ public class UiManager : MonoBehaviour
         OptionMenu_On = true;
     }
 
-    void Update()
+    void LateUpdate()
     {
-        if(SceneManager.GetActiveScene().name == "KJS_TestScene 1" && Input.GetKeyDown(KeyCode.Escape)) 
+        playerCoin.text = string.Format("{0:n0}", playerItem.coin);
+
+        if(Input.GetKeyDown(KeyCode.Escape)) 
         {
             if(OptionMenu_On)
                Option_off();
             else
                 Option_on();
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.N))
         {
             HealthDown();
         }
