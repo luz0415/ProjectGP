@@ -36,6 +36,8 @@ public class UiManager : MonoBehaviour
     public int health;
     bool OptionMenu_On = false;
 
+    public GameObject MapUI;
+
     private void Awake()
     {
         if (instance != this)
