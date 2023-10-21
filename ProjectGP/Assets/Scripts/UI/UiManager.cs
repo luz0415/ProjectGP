@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.ComponentModel;
 using System.Runtime.ExceptionServices;
 
 public class UiManager : MonoBehaviour
@@ -23,6 +24,8 @@ public class UiManager : MonoBehaviour
     private static UiManager m_instance;
 
     public GameObject OptionMenu;
+    public GameObject RestartGame;
+    public PlayerItem playerItem;
     public TextMeshProUGUI playerCoin;
 
     public RectTransform UIHeart;
@@ -44,6 +47,7 @@ public class UiManager : MonoBehaviour
     void Start()
     {
         OptionMenu.SetActive(false);
+        RestartGame.SetActive(false);
 
         health = 0;
 
@@ -55,6 +59,11 @@ public class UiManager : MonoBehaviour
     public void SceneChange() // -------------------------------------------------시작화면
     {
         SceneManager.LoadScene("KJS_TestScene 1");
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("KJS_TestScene_Ingame");
     }
 
     public void gameOption()
@@ -147,6 +156,17 @@ public class UiManager : MonoBehaviour
         OptionMenu_On = true;
     }
 
+    void Update()
+    {
+        if(SceneManager.GetActiveScene().name != "KJS_TestScene")
+            playerCoin.text = string.Format("{0:n0}", playerItem.coin);
+
+        if(health == 0)
+        {
+            Time.timeScale = 0;
+            RestartGame.SetActive(true);
+        }
+
     public void SetCoinUI(int coin)
     {
         playerCoin.text = string.Format("{0:n0}", coin);
@@ -154,7 +174,6 @@ public class UiManager : MonoBehaviour
 
     void LateUpdate()
     {
-
         if(Input.GetKeyDown(KeyCode.Escape)) 
         {
             if(OptionMenu_On)
