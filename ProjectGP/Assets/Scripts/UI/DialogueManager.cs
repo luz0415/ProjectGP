@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager: MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class DialogueManager: MonoBehaviour
     public Image cutSceneImage;
 
     private List<string> listSentences;
-    private List<Image> listcutSceneImage;
+    private List<Sprite> listcutSceneImage;
 
     private int count;
 
@@ -20,7 +21,7 @@ public class DialogueManager: MonoBehaviour
         count = 0;
         Text.text = "";
         listSentences = new List<string>();
-        listcutSceneImage = new List<Image>();
+        listcutSceneImage = new List<Sprite>();
     }
 
     public void ShowDialogue(Dialogue dialogue)
@@ -30,7 +31,7 @@ public class DialogueManager: MonoBehaviour
         for(int i = 0; i < dialogue.sentences.Length; i++)
         {
             listSentences.Add(dialogue.sentences[i]);
-            listcutSceneImage.Add(dialogue.images[i]);
+            listcutSceneImage.Add(dialogue.sprites[i]);
         }
 
         StartCoroutine(StartDialogueCoroutine());
@@ -38,11 +39,13 @@ public class DialogueManager: MonoBehaviour
 
     public void ExitDialogue()
     {
-        Text.text = "";
         count = 0;
+        Text.text = "";
         listSentences.Clear();
         listcutSceneImage.Clear();
         cutScene = false;
+
+        SceneManager.LoadScene("KJS_TestScene");
     }
 
     IEnumerator StartDialogueCoroutine()
@@ -52,7 +55,7 @@ public class DialogueManager: MonoBehaviour
             if (listcutSceneImage[count] != listcutSceneImage[count - 1])
             {
                 yield return new WaitForSeconds(0.1f);
-                cutSceneImage.sprite = listcutSceneImage[count].sprite;
+                cutSceneImage.sprite = listcutSceneImage[count];
             }
             else
             {
@@ -61,10 +64,10 @@ public class DialogueManager: MonoBehaviour
         }
         else
         {
-            cutSceneImage = listcutSceneImage[count];
+            cutSceneImage.sprite = listcutSceneImage[count];
         }
 
-        for(int i = 0; i< listSentences[count].Length; i++) 
+        for(int i = 0; i < listSentences[count].Length; i++) 
         {
             Text.text += listSentences[count][i];
             yield return new WaitForSeconds(0.01f);
@@ -75,7 +78,7 @@ public class DialogueManager: MonoBehaviour
     {
         if(cutScene)
         {
-            if (Input.GetKeyDown(KeyCode.Z))
+            if (Input.anyKeyDown)
             {
                 count++;
                 Text.text = "";

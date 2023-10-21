@@ -1620,6 +1620,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OptionMenu: {fileID: 1788956099}
+  MainMenu: {fileID: 0}
+  RestartGame: {fileID: 1836628088}
   playerItem: {fileID: 829855958}
   playerCoin: {fileID: 454152434}
   UIHeart: {fileID: 170987850}

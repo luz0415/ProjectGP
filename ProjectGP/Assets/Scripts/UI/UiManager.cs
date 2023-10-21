@@ -50,11 +50,11 @@ public class UiManager : MonoBehaviour
         OptionMenu.SetActive(false);
         //RestartGame.SetActive(false);
 
-        health = 0;
+        health = 1;
 
         //int maxHealth = GameManager.instance.player.GetComponent<PlayerHP>().startingHP;
         //MaxHealthUp(maxHealth);
-        //SetCoinUI(0);
+        SetCoinUI(0);
     }
 
     public void GameStart() // -------------------------------------------------시작화면
@@ -163,15 +163,6 @@ public class UiManager : MonoBehaviour
 
     void Update()
     {
-        if (SceneManager.GetActiveScene().name != "KJS_TestScene")
-            SetCoinUI(playerItem.coin);
-
-        if (health == 0)
-        {
-            Time.timeScale = 0;
-            //RestartGame.SetActive(true);
-        }
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (OptionMenu_On)
