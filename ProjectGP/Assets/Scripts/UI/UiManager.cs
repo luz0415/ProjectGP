@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.ComponentModel;
 
 public class UiManager : MonoBehaviour
 {
     public GameObject OptionMenu;
+    public GameObject RestartGame;
     public PlayerItem playerItem;
     public TextMeshProUGUI playerCoin;
 
@@ -19,6 +21,7 @@ public class UiManager : MonoBehaviour
     void Start()
     {
         OptionMenu.SetActive(false);
+        RestartGame.SetActive(false);
 
         for(int i = 0; i < health; i++)
         {
@@ -29,6 +32,11 @@ public class UiManager : MonoBehaviour
     public void SceneChange() // -------------------------------------------------시작화면
     {
         SceneManager.LoadScene("KJS_TestScene 1");
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("KJS_TestScene_Ingame");
     }
 
     public void gameOption()
@@ -76,9 +84,16 @@ public class UiManager : MonoBehaviour
         OptionMenu_On = true;
     }
 
-    void LateUpdate()
+    void Update()
     {
-        playerCoin.text = string.Format("{0:n0}", playerItem.coin);
+        if(SceneManager.GetActiveScene().name != "KJS_TestScene")
+            playerCoin.text = string.Format("{0:n0}", playerItem.coin);
+
+        if(health == 0)
+        {
+            Time.timeScale = 0;
+            RestartGame.SetActive(true);
+        }
 
         if(Input.GetKeyDown(KeyCode.Escape)) 
         {
