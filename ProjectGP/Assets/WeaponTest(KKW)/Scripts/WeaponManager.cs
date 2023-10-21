@@ -5,32 +5,26 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     // 무기 종류(게임 오브젝트)
-    public GameObject[] weapons;
+    public Weapon[] weapons;
     public int weaponIndex = 0;
 
     // 가지고 있는 무기
-    public bool[] hasWeapon;   
+    public bool[] hasWeapon;
 
-    // 무기 스크립트
-    public Rifle rifle;
-    public GrenadeLauncher grenadeLauncher;
-    public Handgun handgun;
-    public Shotgun shotgun;
+
     public Ammo_Rifle ammo_Rifle;
     public Ammo_GrenadeLauncher ammo_GL;
-    public FX_Explosion explosion;
     public Ammo_Handgun ammo_Handgun;
-    public Ammo_Shotgun ammo_Shotgun;
+    public AmmoPackage_SG ammos_Shotgun;
+    private Ammo_Shotgun[] ammo_Shotgun;
+
+    private const int AMMO_SHOTGUN_COUNT = 5;
+
+    public FX_Explosion explosion;
 
     // 플레이어
     public TestPlayer player;
 
-    // 무기 속성
-    public float maxBullet;     // 최대 총알 수
-    float currentBullet;        // 현재 남은 총알 수
-    public float fireDamp;      // 연사 지연 시간
-    float currentDamp;          // 실제 연산에 쓰일 지연시간
-    public float reloadTime;    // 재장전에 걸리는 시간
     bool isReload = false;
     bool isIdle = false;
 
@@ -40,6 +34,12 @@ public class WeaponManager : MonoBehaviour
         // 모든 무기 비활성화
         AllWeaponsDeactive();
         hasWeapon[2] = true; // 권총
+
+        ammo_Shotgun = new Ammo_Shotgun[AMMO_SHOTGUN_COUNT];
+        for(int i = 0; i < AMMO_SHOTGUN_COUNT; i++)
+        {
+            ammo_Shotgun[i] = ammos_Shotgun.transform.GetChild(i).GetComponent<Ammo_Shotgun>();
+        }
     }
 
     void Update()
@@ -72,7 +72,7 @@ public class WeaponManager : MonoBehaviour
 
         AllWeaponsDeactive();
 
-        weapons[weaponIndex].SetActive(true);
+        weapons[weaponIndex].gameObject.SetActive(true);
         SetWeaponAnimaition(weaponIndex);
     }
 
@@ -81,7 +81,7 @@ public class WeaponManager : MonoBehaviour
     {
         for (int i = 0; i < weapons.Length; i++)
         {
-            weapons[i].SetActive(false);
+            weapons[i].gameObject.SetActive(false);
         }
     }
 
@@ -114,12 +114,12 @@ public class WeaponManager : MonoBehaviour
     }
 
     // MachineArms(재장전 속도 20% 감소)
-    void DecreaseReloadTime()
+    void DecreaseAllReloadTime(float ratio)
     {
-        rifle.reloadTime *= 0.8f;
-        grenadeLauncher.reloadTime *= 0.8f;
-        handgun.reloadTime *= 0.8f;
-        shotgun.reloadTime *= 0.8f;
+        for(int i = 0; i < weapons.Length; i++)
+        {
+            weapons[i].DecreaseReloadTime(ratio);
+        }
     }
 
     // MithrilBullet(관통 +1)
@@ -127,25 +127,28 @@ public class WeaponManager : MonoBehaviour
     {
         ammo_Rifle.penetrate++;
         ammo_Handgun.penetrate++;
-        ammo_Shotgun.penetrate++;
+        for (int i = 0; i < AMMO_SHOTGUN_COUNT; i++)
+        {
+            ammo_Shotgun[i].penetrate++;
+        }
     }
 
     // PlasteelMagazine(탄창UP)
-    void IncreseMaxBullet()
+    void IncreseAllMaxBullet(float ratio)
     {
-        rifle.maxBullet *= 1.2f;
-        grenadeLauncher.maxBullet *= 1.2f;
-        handgun.maxBullet *= 1.2f;
-        shotgun.maxBullet *= 1.2f;
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            weapons[i].IncreseMaxBullet(ratio);
+        }
     }
 
     // SuperDrink(공속 20%증가)
-    void DecreaseFireDamp()
+    void DecreaseFireDamp(float ratio)
     {
-        rifle.fireDamp *= 0.8f;
-        grenadeLauncher.fireDamp *= 0.8f;
-        handgun.fireDamp *= 0.8f;
-        shotgun.fireDamp *= 0.8f;
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            weapons[i].DecreaseFireDamp(ratio);
+        }
     }
 
     // BiochemicalWeapon(데미지 두 배)
@@ -154,6 +157,9 @@ public class WeaponManager : MonoBehaviour
         ammo_Rifle.damage *= 2f;
         explosion.damage *= 2f;
         ammo_Handgun.damage *= 2f;
-        ammo_Shotgun.damage *= 2f;
+        for (int i = 0; i < AMMO_SHOTGUN_COUNT; i++)
+        {
+            ammo_Shotgun[i].damage *= 2f;
+        }
     }
 }

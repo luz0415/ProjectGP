@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1698067360237648722}
   - component: {fileID: 1698067360237648721}
   - component: {fileID: 1698067360237648720}
-  - component: {fileID: 1698067360237648727}
+  - component: {fileID: -5811552260632439588}
   m_Layer: 0
   m_Name: Ammo_Handgun
   m_TagString: Untagged
@@ -65,7 +65,7 @@ CapsuleCollider:
   m_Height: 0.13
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1698067360237648727
+--- !u!114 &-5811552260632439588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,10 +74,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1698067360237648726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3df210ce6ae18749b7cdae8daed16fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f1a0ce63d8c5e14eaa09b6e96c312ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3000
+  damage: 1
   penetrate: 2
 --- !u!1001 &1698067359573533090
 PrefabInstance:

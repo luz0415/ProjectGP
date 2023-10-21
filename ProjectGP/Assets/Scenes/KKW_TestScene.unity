@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1164,11 +1164,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b832924c2575da348be6858b70e072e3, type: 3}
---- !u!1 &629960123 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1722838658101682, guid: b832924c2575da348be6858b70e072e3, type: 3}
-  m_PrefabInstance: {fileID: 626845588}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &677870185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,7 +2058,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -4735596444346756710, guid: b832924c2575da348be6858b70e072e3, type: 3}
   m_PrefabInstance: {fileID: 626845588}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 629960123}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 599d709f766168c488de86f405ddb3c0, type: 3}
@@ -2279,25 +2274,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - {fileID: 629960123}
-  - {fileID: 1871135863337689}
-  - {fileID: 1445128239854856389}
-  - {fileID: 1932556788}
+  - {fileID: 1476268351870980068}
+  - {fileID: 1536381647}
+  - {fileID: 1932556789}
+  - {fileID: 33574753913641634}
   weaponIndex: 0
   hasWeapon: 01000000
-  rifle: {fileID: 1536381647}
-  grenadeLauncher: {fileID: 33574753913641634}
-  handgun: {fileID: 1476268351870980068}
-  shotgun: {fileID: 1932556789}
-  ammo_Rifle: {fileID: 0}
-  ammo_GL: {fileID: 0}
-  explosion: {fileID: 0}
-  ammo_Handgun: {fileID: 0}
-  ammo_Shotgun: {fileID: 0}
+  ammo_Rifle: {fileID: 6954242942315027195, guid: ac607617d6f26034cb7af9a4fc511d4d, type: 3}
+  ammo_GL: {fileID: 1714481885786273990, guid: 44b35fdcbcddb2d4f915a9727de9cece, type: 3}
+  ammo_Handgun: {fileID: -5811552260632439588, guid: d013d60cfbb330e4ab7ba02023e2fb6d, type: 3}
+  ammos_Shotgun: {fileID: 2606024401403896331, guid: dc5dc6a5dd4bb2f4f9be4abf28efc8a7, type: 3}
+  explosion: {fileID: 5396098981157627659, guid: 39573bbcd81384c42b5d5d95725d75b5, type: 3}
   player: {fileID: 677870190}
-  maxBullet: 0
-  fireDamp: 0
-  reloadTime: 0
 --- !u!4 &1753018462
 Transform:
   m_ObjectHideFlags: 0
@@ -2577,17 +2565,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4907947993721736, guid: 348818f667510814d849561cb9b1707b, type: 3}
   m_PrefabInstance: {fileID: 1902550497}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1932556788 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3277777849719441073, guid: d21177fbdfe7bb34890ffe052bee3e89, type: 3}
-  m_PrefabInstance: {fileID: 1630173453}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1932556789 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3785026476392643340, guid: d21177fbdfe7bb34890ffe052bee3e89, type: 3}
   m_PrefabInstance: {fileID: 1630173453}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1932556788}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da55f7f504310bd469b891bbe4241cc9, type: 3}
@@ -2787,7 +2770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f8fa319cb00b54884cce6695f01e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxBullet: 3
+  maxBullet: 5
   fireDamp: 1
   reloadTime: 2
   bullet: {fileID: 1714481885786273988, guid: 44b35fdcbcddb2d4f915a9727de9cece, type: 3}
@@ -2796,6 +2779,7 @@ MonoBehaviour:
   testPlayer: {fileID: 677870190}
   fireSFX: {fileID: 8300000, guid: ebc7684cbee604ebf9093de7a937a053, type: 3}
   muzzleFlash: {fileID: 0}
+  isArmed: 0
 --- !u!4 &33574753913641637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1358112412415852266, guid: d296ebd39054dfd4d93f7ac8dcba86f0, type: 3}
@@ -3009,6 +2993,7 @@ MonoBehaviour:
   testPlayer: {fileID: 677870190}
   fireSFX: {fileID: 8300000, guid: 41d8aef22559b486fbe018fc32a40d0c, type: 3}
   muzzleFlash: {fileID: 426052129}
+  isArmed: 0
 --- !u!82 &1476268351870980069
 AudioSource:
   m_ObjectHideFlags: 0
