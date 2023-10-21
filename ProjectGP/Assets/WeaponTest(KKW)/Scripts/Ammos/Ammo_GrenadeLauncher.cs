@@ -25,7 +25,6 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
     public double velocity;
 
 
-
     void Awake()
     {
         myTransform = transform;

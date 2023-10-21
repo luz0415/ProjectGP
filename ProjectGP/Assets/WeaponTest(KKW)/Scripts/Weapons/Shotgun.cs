@@ -94,7 +94,5 @@ public class Shotgun : MonoBehaviour
         Debug.Log("Reload End");
         isReload = false;
         currentBullet = maxBullet;
-    }
-
-   
+    } 
 }

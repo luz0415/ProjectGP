@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3000
+  penetrate: 2
 --- !u!1001 &1698067359573533090
 PrefabInstance:
   m_ObjectHideFlags: 0

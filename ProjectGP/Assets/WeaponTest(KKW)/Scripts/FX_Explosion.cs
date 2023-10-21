@@ -6,6 +6,7 @@ public class FX_Explosion : MonoBehaviour
 {
     private SphereCollider _collider;
 
+    public float damage = 1f;
 
     void Start()
     {
@@ -21,6 +22,9 @@ public class FX_Explosion : MonoBehaviour
     {
         if(other.tag == "Enemy")
         {
+            // 데미지 관련
+            // 
+            ////
             Destroy(other.gameObject);
         }
     }
