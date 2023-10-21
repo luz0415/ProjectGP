@@ -20,7 +20,7 @@ public class PlayerItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        IItem item = other.GetComponent<IItem>();
+        Coin item = other.GetComponent<Coin>();
         if (item != null)
         {
             item.Use(gameObject);

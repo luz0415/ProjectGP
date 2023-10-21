@@ -25,9 +25,10 @@ public class PlayerHP : LivingEntity
         //playerHPSlider.value = startingHP;
     }
 
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public override void OnDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         base.OnDamage(damage, hitPoint, hitNormal);
+        UiManager.instance.HealthDown(damage);
         StartCoroutine(DamageEffect());
         //playerHPSlider.value -= damage;
     }
@@ -39,16 +40,29 @@ public class PlayerHP : LivingEntity
         playerMaterial.color = Color.white;
     }
 
-    public override void RestoreHP(float restoreHP)
+    public override void RestoreHP(int restoreHP)
     {
         base.RestoreHP(restoreHP);
-        //playerHPSlider.value = HP;
+        UiManager.instance.HealthUp(restoreHP);
     }
 
-    public void IncreaseStartHP(float increaseHP)
+    public void IncreaseStartHP(int increaseHP)
     {
         startingHP += increaseHP;
         HP += increaseHP;
+        UiManager.instance.MaxHealthUp(increaseHP);
+        //playerHPSlider.maxValue = startingHP;
+        //playerHPSlider.value = HP;
+    }
+
+    public void DecreaseStartHP(int decreaseHP)
+    {
+        startingHP -= decreaseHP;
+        if(HP > startingHP)
+        {
+            HP -= decreaseHP;
+        }
+        UiManager.instance.MaxHealthDown(decreaseHP);
         //playerHPSlider.maxValue = startingHP;
         //playerHPSlider.value = HP;
     }

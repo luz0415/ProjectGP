@@ -23,6 +23,7 @@ public class Coin : MonoBehaviour, IItem
     private void GetCoin(PlayerItem playerItem)
     {
         playerItem.coin += coin;
+        UiManager.instance.SetCoinUI(playerItem.coin);
     }
 
     void Pickup()

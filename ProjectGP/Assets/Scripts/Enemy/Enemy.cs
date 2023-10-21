@@ -25,7 +25,7 @@ public class Enemy : LivingEntity
         //playerHPSlider.value = startingHP;
     }
 
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public override void OnDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         base.OnDamage(damage, hitPoint, hitNormal);
         //playerHPSlider.value -= damage;
@@ -39,17 +39,9 @@ public class Enemy : LivingEntity
         enemyMaterial.color = Color.white;
     }
 
-    public override void RestoreHP(float restoreHP)
+    public override void RestoreHP(int restoreHP)
     {
         base.RestoreHP(restoreHP);
-        //playerHPSlider.value = HP;
-    }
-
-    public void IncreaseStartHP(float increaseHP)
-    {
-        startingHP += increaseHP;
-        HP += increaseHP;
-        //playerHPSlider.maxValue = startingHP;
         //playerHPSlider.value = HP;
     }
 

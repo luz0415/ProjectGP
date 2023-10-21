@@ -39,7 +39,7 @@ public class ItemForFree : MonoBehaviour
     {
         if(canBuy && Input.GetKeyDown(KeyCode.LeftControl))
         {
-            item.Use(targetObject);
+            item.Use(GameManager.instance.player.gameObject);
             Destroy(gameObject);
         }
     }

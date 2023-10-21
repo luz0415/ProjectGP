@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GrenadeLauncher : MonoBehaviour
+public class Rifle : MonoBehaviour
 {
     public float maxBullet;     // 최대 총알 수
     float currentBullet;        // 현재 남은 총알 수
@@ -17,8 +17,13 @@ public class GrenadeLauncher : MonoBehaviour
     public GameObject player;   // 플레이어
     public TestPlayer testPlayer;
 
+    // 총 SFX 관련
     public AudioClip fireSFX;
     private AudioSource source = null;
+
+    // 총구 화염 관련
+    public ParticleSystem muzzleFlash;
+    private WFX_LightFlicker _light;
 
     void Start()
     {
@@ -26,44 +31,7 @@ public class GrenadeLauncher : MonoBehaviour
         currentDamp = 0;
 
         source = GetComponent<AudioSource>();
-    }
-
-    void BulletFire()
-    {
-        // currentDamp마다 총 발사
-        if (currentDamp <= 0 && currentBullet > 0 && !isReload)
-        {
-            testPlayer.animator.SetTrigger("shot");
-
-            currentDamp = fireDamp;
-            currentBullet--;
-
-            source.PlayOneShot(fireSFX);
-
-            Instantiate(bullet, firePos.position, player.transform.rotation);
-        }
-        // 총알 다 쓴 경우 재장전
-        else if (currentBullet <= 0 && !isReload)
-        {
-            testPlayer.animator.SetTrigger("reload");
-
-            Debug.Log("Reload Start");
-            isReload = true;
-            StartCoroutine(ReloadBullet());
-
-        }
-    }
-
-    IEnumerator ReloadBullet()
-    {
-        for (float i = reloadTime; i > 0; i -= 0.1f)
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        Debug.Log("Reload End");
-        isReload = false;
-        currentBullet = maxBullet;
+        _light = GetComponentInChildren<WFX_LightFlicker>();
     }
 
     void Update()
@@ -74,5 +42,58 @@ public class GrenadeLauncher : MonoBehaviour
             Debug.Log("Fire");
             BulletFire();
         }
+    }
+
+    void BulletFire()
+    {
+        // currentDamp마다 총 발사
+        if(currentDamp <= 0 && currentBullet >0 && !isReload)
+        {
+            testPlayer.animator.SetTrigger("shot");
+
+            currentDamp = fireDamp;
+            currentBullet--;
+
+            // 총 소리
+            source.PlayOneShot(fireSFX);
+
+            // 총구 화염 구현
+            _light.MuzzleLight();
+            StartCoroutine("MuzzleFlash");
+
+            // 총알 인스턴스화
+            Instantiate(bullet, firePos.position, player.transform.rotation);
+        } 
+        // 총알 다 쓴 경우 재장전
+        else if(currentBullet <= 0 && !isReload)
+        {
+            testPlayer.animator.SetTrigger("reload");
+
+            Debug.Log("Reload Start");
+            isReload = true;
+            StartCoroutine(ReloadBullet());
+           
+        }
+    }
+
+    IEnumerator MuzzleFlash()
+    {
+        muzzleFlash.Play();
+
+        yield return new WaitForSeconds(0.1f);
+
+        muzzleFlash.Stop();
+    }
+
+    IEnumerator ReloadBullet()
+    {
+        for(float i = reloadTime; i > 0; i -= 0.1f)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        Debug.Log("Reload End");
+        isReload = false;
+        currentBullet = maxBullet;
     }
 }
