@@ -8,6 +8,7 @@ public class DialogueManager: MonoBehaviour
 {
     public Text Text;
     public Image cutSceneImage;
+    public Image dialogueWindowImage;
 
     private List<string> listSentences;
     private List<Sprite> listcutSceneImage;
@@ -18,6 +19,8 @@ public class DialogueManager: MonoBehaviour
 
     void Start()
     {
+        cutSceneImage.color = new Color(1f, 1f, 1f, 0f);
+        dialogueWindowImage.color = new Color(0f, 0f, 0f, 0f);
         count = 0;
         Text.text = "";
         listSentences = new List<string>();
@@ -26,6 +29,8 @@ public class DialogueManager: MonoBehaviour
 
     public void ShowDialogue(Dialogue dialogue)
     {
+        cutSceneImage.color = new Color(1f, 1f, 1f, 1f);
+        dialogueWindowImage.color = new Color(0f, 0f, 0f, 1f);
         cutScene = true;
 
         for(int i = 0; i < dialogue.sentences.Length; i++)
@@ -45,7 +50,10 @@ public class DialogueManager: MonoBehaviour
         listcutSceneImage.Clear();
         cutScene = false;
 
-        SceneManager.LoadScene("KJS_TestScene");
+        if(SceneManager.GetActiveScene().name == "KJS_TestScene")
+            SceneManager.LoadScene("KDH_TestScene 1F");
+        if (SceneManager.GetActiveScene().name == "KDH_TestScene 3F")
+            SceneManager.LoadScene("KJS_TestScene");
     }
 
     IEnumerator StartDialogueCoroutine()

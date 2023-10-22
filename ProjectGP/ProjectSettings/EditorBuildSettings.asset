@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/KJS_TestScene.unity
+    guid: 48dfbf210f4e4b0439a41ddbd4fe2499
+  - enabled: 1
     path: Assets/Scenes/KDH_TestScene 1F.unity
     guid: 174748ef57b9fd749b3dfb7ed52b7d9d
   - enabled: 1

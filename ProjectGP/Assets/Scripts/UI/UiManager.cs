@@ -24,8 +24,7 @@ public class UiManager : MonoBehaviour
     private static UiManager m_instance;
 
     public GameObject OptionMenu;
-    public GameObject MainMenu;
-    //public GameObject RestartGame;
+    public GameObject RestartGame;
     public PlayerItem playerItem;
     public TextMeshProUGUI playerCoin;
 
@@ -49,44 +48,19 @@ public class UiManager : MonoBehaviour
 
     void Start()
     {
+        health = 0;
         OptionMenu.SetActive(false);
-        //RestartGame.SetActive(false);
+        RestartGame.SetActive(false);
 
         int maxHealth = GameManager.instance.player.GetComponent<PlayerHP>().startingHP;
         MaxHealthUp(maxHealth);
         SetCoinUI(0);
     }
 
-    public void GameStart() // -------------------------------------------------시작화면
-    {
-        MainMenu.SetActive(false);
-    }
-
     public void Restart()
     {
-        SceneManager.LoadScene("KJS_TestScene_Ingame");
+        SceneManager.LoadScene("KJS_TestScene");
     }
-
-    public void gameOption()
-    {
-        OptionMenu.SetActive(true);
-        OptionMenu_On = true;
-    }
-
-    public void gameExit()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-    }
-
-    public void option_goto_main()
-    {
-        OptionMenu.SetActive(false);
-        OptionMenu_On = false;
-    } // -------------------------------------------------시작화면
 
     public void HealthDown(int downHealth)
     {
@@ -145,17 +119,18 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    void Option_off()
+    public void Option_off()
     {
         OptionMenu.SetActive(false);
         OptionMenu_On = false;
     }
 
-    void Option_on()
+    public void Option_on()
     {
         OptionMenu.SetActive(true);
         OptionMenu_On = true;
     }
+
     public void SetCoinUI(int coin)
     {
         playerCoin.text = string.Format("{0:n0}", coin);
@@ -169,6 +144,12 @@ public class UiManager : MonoBehaviour
                 Option_off();
             else
                 Option_on();
+        }
+
+        if(health == 0 && (SceneManager.GetActiveScene().name != "KJS_TestScene"))
+        {
+            Time.timeScale = 0f;
+            RestartGame.SetActive(true);
         }
     }
 }

@@ -5,7 +5,20 @@ using UnityEngine.UI;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    [SerializeField]
+    public static DialogueTrigger instance
+    {
+        get
+        {
+            if (m_instance == null)
+            {
+                m_instance = FindObjectOfType<DialogueTrigger>();
+            }
+            return m_instance;
+        }
+    }
+
+    private static DialogueTrigger m_instance;
+
     public GameObject cutScene;
     public Dialogue dialogue;
 
