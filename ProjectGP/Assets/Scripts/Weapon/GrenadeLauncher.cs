@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Rifle : Weapon
+public class GrenadeLauncher : Weapon
 {
-
     void Start()
     {
         currentBullet = maxBullet;
@@ -36,10 +35,10 @@ public class Rifle : Weapon
     void BulletFire()
     {
         // currentDamp마다 총 발사
-        if(currentDamp <= 0 && currentBullet >0 && !isReload)
+        if (currentDamp <= 0 && currentBullet > 0 && !isReload)
         {
-            testPlayer.animator.SetTrigger("shot");
-            testPlayer.isIdle = false;
+            scriptPlayer.animator.SetTrigger("shot");
+            scriptPlayer.isIdle = false;
 
             currentDamp = fireDamp;
             currentBullet--;
@@ -53,18 +52,17 @@ public class Rifle : Weapon
 
             // 총알 인스턴스화
             Instantiate(bullet, firePos.position, player.transform.rotation);
-        } 
+        }
         // 총알 다 쓴 경우 재장전
-        else if(currentBullet <= 0 && !isReload)
+        else if (currentBullet <= 0 && !isReload)
         {
-            Reload();
+            Reload();         
         }
     }
 
     void Reload()
     {
-        testPlayer.animator.SetTrigger("reload");
-       
+        scriptPlayer.animator.SetTrigger("reload");
 
         Debug.Log("Reload Start");
         isReload = true;
@@ -82,9 +80,9 @@ public class Rifle : Weapon
 
     IEnumerator ReloadBullet()
     {
-        for(float i = reloadTime; i > 0; i -= 0.1f)
+        for (float i = reloadTime; i > 0; i -= 0.1f)
         {
-            testPlayer.isIdle = false;
+            scriptPlayer.isIdle = false;
             yield return new WaitForSeconds(0.1f);
         }
 

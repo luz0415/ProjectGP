@@ -37,6 +37,8 @@ public class Ammo_Shotgun : MonoBehaviour
         {
             Debug.Log("Bullet");
         }
+        else
+            Destroy(gameObject);
         // 
 
     }

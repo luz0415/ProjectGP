@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     // 상태 변수
     private bool isRun = false;
+    public bool isIdle = true;
 
     // 민감도
     public float lookSensitivity;
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     public Camera theCamera;
     private Rigidbody myRigid;
     private CapsuleCollider capsuleCollider;
+    public Animator animator;
     private Vector3 mousePosition;
 
     // Start is called before the first frame update
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour
         myRigid = GetComponent<Rigidbody>();
         applySpeed = walkSpeed;
         capsuleCollider = GetComponent<CapsuleCollider>();
+        animator = GetComponentInChildren<Animator>();
         mousePosition = transform.rotation.eulerAngles;
     }
 
@@ -87,6 +90,14 @@ public class Player : MonoBehaviour
 
         myRigid.MovePosition(myRigid.position + _velocity * Time.deltaTime);
 
+        // walk 애니메이션을 위한 함수
+        if (_moveDirX != 0 || _moveDirZ != 0)
+            animator.SetBool("isWalk", true);
+        else
+        {
+            animator.SetBool("isWalk", false);
+            animator.SetTrigger("setIdle");
+        }
     }
 
     //캐릭터 방향 회전

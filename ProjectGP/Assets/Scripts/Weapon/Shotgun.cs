@@ -36,8 +36,8 @@ public class Shotgun : Weapon
         // currentDamp¸¶´Ù ÃÑ ¹ß»ç
         if (currentDamp <= 0 && currentBullet > 0 && !isReload)
         {
-            testPlayer.animator.SetTrigger("shot");
-            testPlayer.isIdle = false;
+            scriptPlayer.animator.SetTrigger("shot");
+            scriptPlayer.isIdle = false;
 
             currentDamp = fireDamp;
             currentBullet--;
@@ -61,7 +61,7 @@ public class Shotgun : Weapon
 
     void Reload()
     {
-        testPlayer.animator.SetTrigger("reload");
+        scriptPlayer.animator.SetTrigger("reload");
 
         Debug.Log("Reload Start");
         isReload = true;
@@ -81,7 +81,7 @@ public class Shotgun : Weapon
     {
         for (float i = reloadTime; i > 0; i -= 0.1f)
         {
-            testPlayer.isIdle = false;
+            scriptPlayer.isIdle = false;
             yield return new WaitForSeconds(0.1f);
         }
 

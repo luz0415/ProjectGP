@@ -23,14 +23,18 @@ public class WeaponManager : MonoBehaviour
     public FX_Explosion explosion;
 
     // 플레이어
-    public TestPlayer player;
+    public Player player;
 
     // Start is called before the first frame update
     void Start()
     {
         // 모든 무기 비활성화
         AllWeaponsDeactive();
-        hasWeapon[2] = true; // 권총
+
+        // 권총 지급
+        hasWeapon[0] = true;
+        weapons[0].gameObject.SetActive(true);
+        player.animator.SetBool("isHG", true);
 
         ammo_Shotgun = new Ammo_Shotgun[AMMO_SHOTGUN_COUNT];
         for(int i = 0; i < AMMO_SHOTGUN_COUNT; i++)
@@ -65,9 +69,14 @@ public class WeaponManager : MonoBehaviour
         if (player.isIdle != true)
             return;
 
+        int curWeaponIndex = weaponIndex;
+
         do {
             weaponIndex = (weaponIndex + 1) % weapons.Length;
         } while(hasWeapon[weaponIndex] == false);
+
+        if (weaponIndex == curWeaponIndex)
+            return;
 
         AllWeaponsDeactive();
 

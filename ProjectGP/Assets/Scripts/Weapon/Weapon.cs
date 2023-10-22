@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
     public GameObject bullet;   // ÃÑ¾Ë ÇÁ¸®ÆÕ
     public Transform firePos;   // ÃÑ±¸ À§Ä¡
     public GameObject player;   // ÇÃ·¹ÀÌ¾î
-    public TestPlayer testPlayer;
+    public Player scriptPlayer;
 
     // ÃÑ SFX °ü·Ã
     public AudioClip fireSFX;
