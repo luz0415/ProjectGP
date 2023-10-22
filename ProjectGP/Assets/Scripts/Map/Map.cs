@@ -25,6 +25,8 @@ public class Map : MonoBehaviour
     [SerializeField] protected GameObject[] wallCenters;
     [SerializeField] protected GameObject[] portals;
 
+    public int[] roomCoord = new int[2];
+
     public bool isRoomEnd;
 
     public float doorUpperPartPosY = 7.5f;

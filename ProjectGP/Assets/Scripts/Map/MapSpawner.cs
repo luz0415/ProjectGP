@@ -60,6 +60,9 @@ public class MapSpawner : MonoBehaviour
     private List<GameObject> originalCombatMapPrefabs = new List<GameObject>();
     public List<GameObject> specialMapPrefabs;
 
+    private GameObject[,] MapUI;
+    private GameObject nowMap;
+
     private void Awake()
     {
         originalCombatMapPrefabs = combatMapPrefabs.ToList();
@@ -77,11 +80,14 @@ public class MapSpawner : MonoBehaviour
     private void FloorPlanInitialization()
     {
         floorPlan = new Map[floorPlanX, floorPlanY];
-        for(int i = 0; i < floorPlanX; i++)
+        MapUI = new GameObject[floorPlanX, floorPlanY];
+        for (int i = 0; i < floorPlanX; i++)
         {
             for(int j = 0; j < floorPlanY; j++)
             {
                 floorPlan[i, j] = null;
+                MapUI[i, j] = UiManager.instance.MapUI.transform.GetChild(i).GetChild(j).gameObject;
+                MapUI[i, j].SetActive(false);
             }
         }
     }
@@ -149,6 +155,40 @@ public class MapSpawner : MonoBehaviour
             }
         }
 
+
+        for (int i = 0; i < floorPlanX; i++)
+        {
+            for (int j = 0; j < floorPlanY; j++)
+            {
+                if (floorPlan[i, j] != null)
+                {
+                    print(i + " " + j);
+                    MapUI[i, j].transform.parent.gameObject.SetActive(true);
+                    MapUI[i, j].SetActive(true);
+                    for(int direction = 0; direction < 4; direction++)
+                    {
+                        if (floorPlan[i, j].neighborMap[direction] != null)
+                        {
+                            int reverseDirection;
+                            if (direction >= 2)
+                            {
+                                reverseDirection = direction - 2;
+                            }
+                            else
+                            {
+                                reverseDirection = direction + 2;
+                            }
+
+                            MapUI[i, j].transform.GetChild(reverseDirection).gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
+        }
+
+        int fullRoomChildIndex = MapUI[baseRoomCoord.x, baseRoomCoord.y].transform.childCount - 1;
+        nowMap = MapUI[baseRoomCoord.x, baseRoomCoord.y];
+        nowMap.transform.GetChild(fullRoomChildIndex).gameObject.SetActive(true);
     }
 
     void RoomInstantiate(Room newRoom, Room basisRoom, int direction = -1)
@@ -182,6 +222,7 @@ public class MapSpawner : MonoBehaviour
 
         GameObject roomPrefab = SelectRoomPrefab();
         newRoom.map = Instantiate(roomPrefab, newRoomPos, Quaternion.identity).GetComponent<Map>();
+        newRoom.map.roomCoord[0] = newRoom.coord.x; newRoom.map.roomCoord[1] = newRoom.coord.y;
 
         roomCount++;
     }
@@ -255,5 +296,18 @@ public class MapSpawner : MonoBehaviour
 
         neighborRoom.map.neighborMap[reverseDirection] = standardRoom.map;
         standardRoom.map.neighborMap[direction] = neighborRoom.map;
+    }
+
+    public void RoomUIChange(int nowX, int nowY, int direction)
+    {
+        int fullRoomChildIndex = nowMap.transform.childCount - 1;
+        nowMap.transform.GetChild(fullRoomChildIndex).gameObject.SetActive(false);
+
+        // »óÇÏÁÂ¿ì
+        int[] dx = { 0, 0, -1, 1 };
+        int[] dy = { -1, 1, 0, 0 };
+        nowMap = MapUI[nowX + dx[direction], nowY + dy[direction]];
+        nowMap.transform.GetChild(fullRoomChildIndex).gameObject.SetActive(true);
+
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.ComponentModel;
 using System.Runtime.ExceptionServices;
 
 public class UiManager : MonoBehaviour
@@ -23,6 +24,9 @@ public class UiManager : MonoBehaviour
     private static UiManager m_instance;
 
     public GameObject OptionMenu;
+    public GameObject MainMenu;
+    //public GameObject RestartGame;
+    public PlayerItem playerItem;
     public TextMeshProUGUI playerCoin;
 
     public RectTransform UIHeart;
@@ -31,6 +35,8 @@ public class UiManager : MonoBehaviour
 
     public int health;
     bool OptionMenu_On = false;
+
+    public GameObject MapUI;
 
     private void Awake()
     {
@@ -44,17 +50,23 @@ public class UiManager : MonoBehaviour
     void Start()
     {
         OptionMenu.SetActive(false);
+        //RestartGame.SetActive(false);
 
-        health = 0;
+        health = 1;
 
-        int maxHealth = GameManager.instance.player.GetComponent<PlayerHP>().startingHP;
-        MaxHealthUp(maxHealth);
+        //int maxHealth = GameManager.instance.player.GetComponent<PlayerHP>().startingHP;
+        //MaxHealthUp(maxHealth);
         SetCoinUI(0);
     }
 
-    public void SceneChange() // -------------------------------------------------시작화면
+    public void GameStart() // -------------------------------------------------시작화면
     {
-        SceneManager.LoadScene("KJS_TestScene 1");
+        MainMenu.SetActive(false);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("KJS_TestScene_Ingame");
     }
 
     public void gameOption()
@@ -90,7 +102,7 @@ public class UiManager : MonoBehaviour
 
     public void HealthUp(int upHealth)
     {
-        for(int i = 0; i < upHealth; i++)
+        for (int i = 0; i < upHealth; i++)
         {
             if (health == hearts.Count) return;
             hearts[health].color = new Color(0.915f, 0.39f, 0.39f, 1);
@@ -126,11 +138,11 @@ public class UiManager : MonoBehaviour
                     new Vector3(hearts[hearts.Count - 1].rectTransform.position.x + 100, hearts[hearts.Count - 1].rectTransform.position.y, hearts[hearts.Count - 1].rectTransform.position.z);
                 newHealth = Instantiate(hearts[hearts.Count - 1].gameObject, newHealthPosition, Quaternion.identity).GetComponent<Image>();
             }
-            
+
             hearts.Add(newHealth);
             newHealth.rectTransform.parent = UIHeart;
             newHealth.color = new Color(0, 0, 0, 0.4f);
-             
+
             HealthUp(1);
         }
     }
@@ -146,19 +158,17 @@ public class UiManager : MonoBehaviour
         OptionMenu.SetActive(true);
         OptionMenu_On = true;
     }
-
     public void SetCoinUI(int coin)
     {
         playerCoin.text = string.Format("{0:n0}", coin);
     }
 
-    void LateUpdate()
+    void Update()
     {
-
-        if(Input.GetKeyDown(KeyCode.Escape)) 
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(OptionMenu_On)
-               Option_off();
+            if (OptionMenu_On)
+                Option_off();
             else
                 Option_on();
         }

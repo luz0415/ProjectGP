@@ -12,6 +12,7 @@ public class TestPlayer : MonoBehaviour
 
     // 상태 변수
     private bool isRun = false;
+    public bool isIdle = true;
 
     // 민감도
     public float lookSensitivity;
@@ -25,9 +26,7 @@ public class TestPlayer : MonoBehaviour
     private CapsuleCollider capsuleCollider;
     private Vector3 mousePosition;
 
-
     public Animator animator;
-
 
     // Start is called before the first frame update
     void Start()
