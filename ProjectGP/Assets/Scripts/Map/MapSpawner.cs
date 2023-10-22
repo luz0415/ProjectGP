@@ -88,6 +88,10 @@ public class MapSpawner : MonoBehaviour
                 floorPlan[i, j] = null;
                 MapUI[i, j] = UiManager.instance.MapUI.transform.GetChild(i).GetChild(j).gameObject;
                 MapUI[i, j].SetActive(false);
+                for(int k = 0; k < MapUI[i, j].transform.childCount; k++)
+                {
+                    MapUI[i, j].transform.GetChild(k).gameObject.SetActive(false);
+                }
             }
         }
     }

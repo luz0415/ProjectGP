@@ -53,7 +53,10 @@ public class DialogueManager: MonoBehaviour
         if(SceneManager.GetActiveScene().name == "KJS_TestScene")
             SceneManager.LoadScene("KDH_TestScene 1F");
         if (SceneManager.GetActiveScene().name == "KDH_TestScene 3F")
+        {
+            GameManager.instance.RestartGame();
             SceneManager.LoadScene("KJS_TestScene");
+        }
     }
 
     IEnumerator StartDialogueCoroutine()

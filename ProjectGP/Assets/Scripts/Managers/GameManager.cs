@@ -74,6 +74,16 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
     }
 
+    public void RestartGame()
+    {
+        Destroy(cameraController.gameObject);
+        Destroy(roomChangePostProcess.gameObject);
+        Destroy(player.gameObject);
+        Destroy(WeaponManager.instance.gameObject);
+        Destroy(UiManager.instance.gameObject);
+        Destroy(gameObject);
+    }
+
     public void ChangeRoomCamera(Vector3 moveRoomPos)
     {
         cameraController.ChangeActiveCamera();

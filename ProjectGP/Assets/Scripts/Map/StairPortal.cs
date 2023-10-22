@@ -20,6 +20,7 @@ public class StairPortal : MonoBehaviour
         {
             if (nowSceneIndex == lastFloorSceneIndex-1) // 조건문 추가 마지막방 끝 들어갔을 때 엔딩 나오게 설정
             {
+                GameManager.instance.isGamePaused = true;
                 DialogueTrigger.instance.CutSceneStart();
             }
             else if (nowSceneIndex != lastFloorSceneIndex)

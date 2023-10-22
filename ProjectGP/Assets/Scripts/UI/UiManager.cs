@@ -59,6 +59,10 @@ public class UiManager : MonoBehaviour
 
     public void Restart()
     {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.RestartGame();
+        }
         SceneManager.LoadScene("KJS_TestScene");
     }
 
