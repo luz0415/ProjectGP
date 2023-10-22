@@ -17,6 +17,8 @@ public class Handgun : Weapon
     private void OnEnable()
     {
         Reload();
+
+        _light.GetComponent<Light>().enabled = false;
     }
 
     void Update()
@@ -35,6 +37,7 @@ public class Handgun : Weapon
         if (currentDamp <= 0 && currentBullet > 0 && !isReload)
         {
             testPlayer.animator.SetTrigger("shot");
+            testPlayer.isIdle = false;
 
             currentDamp = fireDamp;
             currentBullet--;
@@ -78,6 +81,7 @@ public class Handgun : Weapon
     {
         for (float i = reloadTime; i > 0; i -= 0.1f)
         {
+            testPlayer.isIdle = false;
             yield return new WaitForSeconds(0.1f);
         }
 

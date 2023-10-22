@@ -25,9 +25,6 @@ public class WeaponManager : MonoBehaviour
     // 플레이어
     public TestPlayer player;
 
-    bool isReload = false;
-    bool isIdle = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -44,8 +41,7 @@ public class WeaponManager : MonoBehaviour
 
     void Update()
     {
-        CheckIsIdle();
-        if (Input.GetKeyDown(KeyCode.Tab) && isIdle == false)
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             Swap();
         }
@@ -56,16 +52,19 @@ public class WeaponManager : MonoBehaviour
         if (player.animator.GetCurrentAnimatorStateInfo(1).IsName("Rifle@Idle") ||
             player.animator.GetCurrentAnimatorStateInfo(1).IsName("GL@Idle") ||
             player.animator.GetCurrentAnimatorStateInfo(1).IsName("Handgun@Idle") ||
-            player.animator.GetCurrentAnimatorStateInfo(1).IsName("Shotgun@Idle"))
+            player.animator.GetCurrentAnimatorStateInfo(1).IsName("Shotgun@Idle") ||
+            player.animator.GetCurrentAnimatorStateInfo(1).IsName("Init"))
         {
-            isIdle = true;
+            player.isIdle = true;
         }
-        else
-            isIdle = false;
     }
 
     void Swap()
     {
+        CheckIsIdle();
+        if (player.isIdle != true)
+            return;
+
         do {
             weaponIndex = (weaponIndex + 1) % weapons.Length;
         } while(hasWeapon[weaponIndex] == false);

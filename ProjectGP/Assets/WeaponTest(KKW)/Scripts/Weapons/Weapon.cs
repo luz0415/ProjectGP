@@ -26,7 +26,6 @@ public class Weapon : MonoBehaviour
 
     public bool isArmed = false;
 
-
     // MachineArms(재장전 속도 20% 감소)
     public void DecreaseReloadTime(float ratio)
     {

@@ -14,6 +14,14 @@ public class GrenadeLauncher : Weapon
         _light = GetComponentInChildren<WFX_LightFlicker>();
     }
 
+    // 총 다시 들었을 때 재장전
+    private void OnEnable()
+    {
+        Reload();
+
+        _light.GetComponent<Light>().enabled = false;
+    }
+
     void Update()
     {
         currentDamp -= Time.deltaTime;
@@ -30,6 +38,7 @@ public class GrenadeLauncher : Weapon
         if (currentDamp <= 0 && currentBullet > 0 && !isReload)
         {
             testPlayer.animator.SetTrigger("shot");
+            testPlayer.isIdle = false;
 
             currentDamp = fireDamp;
             currentBullet--;
@@ -47,14 +56,19 @@ public class GrenadeLauncher : Weapon
         // 총알 다 쓴 경우 재장전
         else if (currentBullet <= 0 && !isReload)
         {
-            testPlayer.animator.SetTrigger("reload");
-
-            Debug.Log("Reload Start");
-            isReload = true;
-            StartCoroutine(ReloadBullet());
-
+            Reload();         
         }
     }
+
+    void Reload()
+    {
+        testPlayer.animator.SetTrigger("reload");
+
+        Debug.Log("Reload Start");
+        isReload = true;
+        StartCoroutine(ReloadBullet());
+    }
+
     IEnumerator MuzzleFlash()
     {
         muzzleFlash.Play();
@@ -68,6 +82,7 @@ public class GrenadeLauncher : Weapon
     {
         for (float i = reloadTime; i > 0; i -= 0.1f)
         {
+            testPlayer.isIdle = false;
             yield return new WaitForSeconds(0.1f);
         }
 
