@@ -149,11 +149,18 @@ public class Map : MonoBehaviour
 
         GameManager.instance.SetPostProcessDOFFocalLength(0f);
         GameManager.instance.SetPostProcessGrainIntensity(0f);
+
+        if (GameManager.instance.hasVirtualCombatSimulation)
+        {
+            GameManager.instance.isGamePaused = true;
+            yield return new WaitForSecondsRealtime(0.5f);
+            GameManager.instance.isGamePaused = false;
+        }
     }
 
     protected virtual void RevisitRoom()
     {
-        //StartCoroutine(RevisitRoomCoroutine());
+        StartCoroutine(RevisitRoomCoroutine());
     }
 
     private IEnumerator RevisitRoomCoroutine()

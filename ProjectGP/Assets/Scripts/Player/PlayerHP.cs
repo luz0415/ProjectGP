@@ -10,6 +10,9 @@ public class PlayerHP : LivingEntity
 
     public float damageEffectTime = 0.1f;
 
+    public bool canRevive = false;
+    public bool damageDouble = false;
+
     //private Slider playerHPSlider;
 
     private void Awake()
@@ -27,6 +30,8 @@ public class PlayerHP : LivingEntity
 
     public override void OnDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
     {
+        if (damageDouble) damage *= 2;
+
         base.OnDamage(damage, hitPoint, hitNormal);
         UiManager.instance.HealthDown(damage);
         StartCoroutine(DamageEffect());
@@ -69,9 +74,15 @@ public class PlayerHP : LivingEntity
 
     public override void Dead()
     {
+        if(canRevive)
+        {
+            RestoreHP(startingHP);
+            canRevive = false;
+            return;
+        }
+
         base.Dead();
 
-        playerAnimator.SetTrigger("Die");
 
         //playerMovement.enabled = false;
         //playerShooter.enabled = false;

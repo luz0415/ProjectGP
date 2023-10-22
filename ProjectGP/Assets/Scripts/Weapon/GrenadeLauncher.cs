@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GrenadeLauncher : Weapon
 {
-    void Start()
+    void Awake()
     {
         currentBullet = maxBullet;
         currentDamp = 0;
@@ -32,8 +32,9 @@ public class GrenadeLauncher : Weapon
         }
     }
 
-    void BulletFire()
+    public override void BulletFire()
     {
+        if (GameManager.instance.isGamePaused) return;
         // currentDamp¸¶´Ù ÃÑ ¹ß»ç
         if (currentDamp <= 0 && currentBullet > 0 && !isReload)
         {

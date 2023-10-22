@@ -26,17 +26,15 @@ public class Player : MonoBehaviour
     public Animator animator;
     private Vector3 mousePosition;
 
-    // Start is called before the first frame update
     void Start()
     {
         myRigid = GetComponent<Rigidbody>();
         applySpeed = walkSpeed;
         capsuleCollider = GetComponent<CapsuleCollider>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
         mousePosition = transform.rotation.eulerAngles;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (GameManager.instance != null && GameManager.instance.isGamePaused) return;

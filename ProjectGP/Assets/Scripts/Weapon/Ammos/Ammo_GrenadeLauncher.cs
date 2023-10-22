@@ -24,6 +24,7 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
     private Vector3 currentPosition;
     public double velocity;
 
+    public bool didPlayerShoot = true;
 
     void Awake()
     {
@@ -42,9 +43,24 @@ public class Ammo_GrenadeLauncher : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {                
-            Destroy(gameObject);
-            Instantiate(_VFX, transform.position, Quaternion.identity);
+    {
+        if(other.tag == "Player" && didPlayerShoot)
+        {
+            return;
+        }
+        if(other.tag == "Enemy" && !didPlayerShoot)
+        {
+            return;
+        }
+        if (other.tag == "Weapon")
+        {
+            return;
+        }
+
+        Destroy(gameObject);
+        FX_Explosion fx_explosion = Instantiate(_VFX, transform.position, Quaternion.identity).GetComponent<FX_Explosion>();
+        fx_explosion.didPlayerShoot = didPlayerShoot;
+        
     }
 
     IEnumerator pomulsun()

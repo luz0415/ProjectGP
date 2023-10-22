@@ -162,7 +162,6 @@ public class MapSpawner : MonoBehaviour
             {
                 if (floorPlan[i, j] != null)
                 {
-                    print(i + " " + j);
                     MapUI[i, j].transform.parent.gameObject.SetActive(true);
                     MapUI[i, j].SetActive(true);
                     for(int direction = 0; direction < 4; direction++)

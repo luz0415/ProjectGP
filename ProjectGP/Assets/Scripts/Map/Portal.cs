@@ -21,6 +21,7 @@ public class Portal : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            GameManager.instance.isGamePaused = true;
             other.transform.position = targetEntrance.transform.position;
             GameManager.instance.ChangeRoomCamera(targetMap.transform.position);
             mapSpawner.RoomUIChange(map.roomCoord[0], map.roomCoord[1], direction);

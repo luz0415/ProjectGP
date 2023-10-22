@@ -6,33 +6,59 @@ public class Ammo_Rifle : MonoBehaviour
 {
     public float speed; // 총알 발사 속도
 
-    public float damage = 1f;
+    public int damage = 1;
 
     public int penetrate = 1;   // 관통 가능한 적 수
     private int hitCount = 0;   // 현재 맞은 적의 수
+
+    public bool didPlayerShoot = true;
 
     void Start()
     {
         Vector3 fwb = transform.TransformDirection(Vector3.forward);
         GetComponent<Rigidbody>().AddForce(fwb * speed);
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        // 적과 충돌시
-        if (other.gameObject.tag == "Enemy")
+        if (other.tag == "Weapon")
         {
-            Debug.Log("Enemy");
-
-            hitCount++;
-            if (hitCount >= penetrate)
-                Destroy(gameObject);
-            
-            // 효과
-            //
-            //
+            return;
         }
-        // 적 아닌 다른 것과 충돌
+        LivingEntity livingEntity = other.GetComponent<LivingEntity>();
+        if (livingEntity != null)
+        {
+            if (other.tag == "Player")
+            {
+                if (didPlayerShoot)
+                {
+                    return;
+                }
+                else
+                {
+                    livingEntity.OnDamage(damage, transform.position, Vector3.zero);
+                    Destroy(gameObject);
+                }
+            }
+            else if (other.tag == "Enemy")
+            {
+                if (didPlayerShoot)
+                {
+                    livingEntity.OnDamage(damage, transform.position, Vector3.zero);
+
+                    hitCount++;
+                    if (hitCount >= penetrate)
+                        Destroy(gameObject);
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
         else
+        {
             Destroy(gameObject);
+        }
     }
 }

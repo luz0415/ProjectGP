@@ -198,12 +198,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxBullet: 6
+  currentBullet: 0
   fireDamp: 0.5
   reloadTime: 1
-  bullet: {fileID: 1698067360237648726, guid: d013d60cfbb330e4ab7ba02023e2fb6d, type: 3}
+  bullet: {fileID: 4003034996885800555, guid: d013d60cfbb330e4ab7ba02023e2fb6d, type: 3}
   firePos: {fileID: 6143030102217078634}
   player: {fileID: 0}
-  testPlayer: {fileID: 0}
+  scriptPlayer: {fileID: 0}
   fireSFX: {fileID: 8300000, guid: 41d8aef22559b486fbe018fc32a40d0c, type: 3}
   muzzleFlash: {fileID: 6143030102564003526}
   isArmed: 0

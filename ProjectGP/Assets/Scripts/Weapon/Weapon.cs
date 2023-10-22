@@ -26,6 +26,12 @@ public class Weapon : MonoBehaviour
 
     public bool isArmed = false;
 
+    private void Start()
+    {
+        player = GameManager.instance.player.gameObject;
+        scriptPlayer = GameManager.instance.player;
+    }
+
     // MachineArms(재장전 속도 20% 감소)
     public void DecreaseReloadTime(float ratio)
     {
@@ -41,7 +47,11 @@ public class Weapon : MonoBehaviour
     // SuperDrink(공속 20%증가)
     public void DecreaseFireDamp(float ratio)
     {
-        ratio = 2 - ratio;
-        fireDamp *= 0.8f;
+        fireDamp *= ratio;
+    }
+    public virtual void BulletFire()
+    {
+        if (GameManager.instance.isGamePaused) return;
+
     }
 }

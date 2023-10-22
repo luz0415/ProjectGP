@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
+    public static WeaponManager instance
+    {
+        get
+        {
+            if (m_instance == null)
+            {
+                m_instance = FindObjectOfType<WeaponManager>();
+            }
+            return m_instance;
+        }
+    }
+
+    private static WeaponManager m_instance;
+
     // 무기 종류(게임 오브젝트)
     public Weapon[] weapons;
     public int weaponIndex = 0;
@@ -23,11 +37,20 @@ public class WeaponManager : MonoBehaviour
     public FX_Explosion explosion;
 
     // 플레이어
-    public Player player;
+    private Player player;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
+        player = GameManager.instance.player;
         // 모든 무기 비활성화
         AllWeaponsDeactive();
 
@@ -122,7 +145,7 @@ public class WeaponManager : MonoBehaviour
     }
 
     // MachineArms(재장전 속도 20% 감소)
-    void DecreaseAllReloadTime(float ratio)
+    public void DecreaseAllReloadTime(float ratio)
     {
         for(int i = 0; i < weapons.Length; i++)
         {
@@ -131,7 +154,7 @@ public class WeaponManager : MonoBehaviour
     }
 
     // MithrilBullet(관통 +1)
-    void IncreasePenetrate()
+    public void IncreasePenetrate()
     {
         ammo_Rifle.penetrate++;
         ammo_Handgun.penetrate++;
@@ -142,7 +165,7 @@ public class WeaponManager : MonoBehaviour
     }
 
     // PlasteelMagazine(탄창UP)
-    void IncreseAllMaxBullet(float ratio)
+    public void IncreseAllMaxBullet(float ratio)
     {
         for (int i = 0; i < weapons.Length; i++)
         {
@@ -151,7 +174,7 @@ public class WeaponManager : MonoBehaviour
     }
 
     // SuperDrink(공속 20%증가)
-    void DecreaseFireDamp(float ratio)
+    public void DecreaseFireDamp(float ratio)
     {
         for (int i = 0; i < weapons.Length; i++)
         {
@@ -160,14 +183,14 @@ public class WeaponManager : MonoBehaviour
     }
 
     // BiochemicalWeapon(데미지 두 배)
-    void IncreaseDamage()
+    public void IncreaseDamage()
     {
-        ammo_Rifle.damage *= 2f;
-        explosion.damage *= 2f;
-        ammo_Handgun.damage *= 2f;
+        ammo_Rifle.damage *= 2;
+        explosion.damage *= 2;
+        ammo_Handgun.damage *= 2;
         for (int i = 0; i < AMMO_SHOTGUN_COUNT; i++)
         {
-            ammo_Shotgun[i].damage *= 2f;
+            ammo_Shotgun[i].damage *= 2;
         }
     }
 }

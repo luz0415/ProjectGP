@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8566166674156319486}
   m_Layer: 0
   m_Name: Ammo_Rifle
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,6 +80,7 @@ MonoBehaviour:
   speed: 5000
   damage: 1
   penetrate: 1
+  didPlayerShoot: 1
 --- !u!1001 &826559017884946687
 PrefabInstance:
   m_ObjectHideFlags: 0

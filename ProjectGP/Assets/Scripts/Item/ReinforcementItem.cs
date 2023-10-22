@@ -68,26 +68,39 @@ public class ReinforcementItem : MonoBehaviour, IItem
     private void MachineArms(GameObject target)
     {
         // 장전 속도 20% 증가
+        WeaponManager.instance.DecreaseAllReloadTime(0.8f);
     }
 
     private void StickyWheel(GameObject target)
     {
         // 이동 속도 20% 증가
+        GameManager.instance.player.walkSpeed *= 1.2f;
     }
 
     private void BioreactiveDefibrillator(GameObject target)
     {
         // 부활 1회
+        PlayerHP playerHP = target.GetComponent<PlayerHP>();
+        if(playerHP != null)
+        {
+            playerHP.canRevive = true;
+        }
     }
 
     private void MithrilBullet(GameObject target)
     {
-       // 관통 1회
+        // 관통 1회
+        WeaponManager.instance.IncreasePenetrate();
     }
 
     private void PulseAmplifier(GameObject target)
     {
         // 회피기 쿨타임 20% 감소
+        PlayerDodge playerDodge = target.GetComponent<PlayerDodge>();
+        if (playerDodge != null)
+        {
+            playerDodge.dashCooldown *= 0.8f;
+        }
     }
 
     private void RoboticEye(GameObject target)
@@ -97,26 +110,41 @@ public class ReinforcementItem : MonoBehaviour, IItem
 
     private void PlasteelMagazine(GameObject target)
     {
-        // 현재 무기 탄창 20% 증가
+        // 무기 탄창 20% 증가
+        WeaponManager.instance.DecreaseAllReloadTime(0.8f);
     }
 
     private void StealthModule(GameObject target)
     {
         // 회피기 사용시 적이 잠시 인식 못함
+        target.GetComponent<PlayerDodge>().hasStealthModule = true;
     }
 
     private void VirtualCombatSimulation(GameObject target)
     {
         // 전투 시작 후 0.5초 동안 플레이어만 움직임.
+        PlayerHP playerHP = target.GetComponent<PlayerHP>();
+        if (playerHP != null)
+        {
+            playerHP.DecreaseStartHP(-1);
+        }
+        GameManager.instance.hasVirtualCombatSimulation = true;
     }
 
     private void SuperDrink(GameObject target)
     {
         // 최대체력 -1, 공격속도 20% 증가.
+        WeaponManager.instance.DecreaseFireDamp(0.8f);
     }
 
     private void BiochemicalWeapon(GameObject target)
     {
         // 적도두배 나도두배.
+        PlayerHP playerHP = target.GetComponent<PlayerHP>();
+        if (playerHP != null)
+        {
+            playerHP.damageDouble = true;
+        }
+        WeaponManager.instance.IncreaseDamage();
     }
 }

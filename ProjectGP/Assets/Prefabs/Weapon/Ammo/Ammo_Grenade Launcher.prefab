@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5675762140179104381}
   m_Layer: 0
   m_Name: Ammo_Grenade Launcher
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,6 +55,7 @@ MonoBehaviour:
   Projectile: {fileID: 2113484710412996953}
   _VFX: {fileID: 5396098983206376050, guid: 39573bbcd81384c42b5d5d95725d75b5, type: 3}
   velocity: 0
+  didPlayerShoot: 1
 --- !u!54 &2224125037434453000
 Rigidbody:
   m_ObjectHideFlags: 0

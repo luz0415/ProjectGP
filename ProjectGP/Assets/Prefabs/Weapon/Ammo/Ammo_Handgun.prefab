@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1100044169630525921}
   m_Layer: 0
   m_Name: Ammo_Handgun
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4003034996885800555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.7065241, y: 0, z: -16.729538}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3999966213684439855}
@@ -77,9 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f1a0ce63d8c5e14eaa09b6e96c312ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3000
+  speed: 4000
   damage: 1
-  penetrate: 2
+  penetrate: 1
+  didPlayerShoot: 1
 --- !u!1001 &4003034996727307423
 PrefabInstance:
   m_ObjectHideFlags: 0

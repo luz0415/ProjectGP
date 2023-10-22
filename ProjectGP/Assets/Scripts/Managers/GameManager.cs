@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
 
     private bool callOnce = false;
 
+    public bool hasVirtualCombatSimulation = false;
+    public bool isEnemyPaused;
+
     private void Awake()
     {
         if (instance != this)
@@ -43,6 +46,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         isGameOver = false;
         isGamePaused = false;
+        isEnemyPaused = false;
 
         if (!callOnce)
         {

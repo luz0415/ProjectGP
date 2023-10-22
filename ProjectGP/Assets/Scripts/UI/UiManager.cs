@@ -52,10 +52,8 @@ public class UiManager : MonoBehaviour
         OptionMenu.SetActive(false);
         //RestartGame.SetActive(false);
 
-        health = 1;
-
-        //int maxHealth = GameManager.instance.player.GetComponent<PlayerHP>().startingHP;
-        //MaxHealthUp(maxHealth);
+        int maxHealth = GameManager.instance.player.GetComponent<PlayerHP>().startingHP;
+        MaxHealthUp(maxHealth);
         SetCoinUI(0);
     }
 

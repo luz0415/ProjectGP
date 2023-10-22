@@ -22,13 +22,11 @@ public class Enemy : LivingEntity
     protected override void OnEnable()
     {
         base.OnEnable();
-        //playerHPSlider.value = startingHP;
     }
 
     public override void OnDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         base.OnDamage(damage, hitPoint, hitNormal);
-        //playerHPSlider.value -= damage;
         StartCoroutine(DamageEffect());
     }
 
@@ -51,15 +49,12 @@ public class Enemy : LivingEntity
 
         enemyAnimator.SetTrigger("Die");
 
-        //playerMovement.enabled = false;
-        //playerShooter.enabled = false;
-
         StartCoroutine(DeadCoroutine());
     }
 
     private IEnumerator DeadCoroutine()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.0f);
         Destroy(gameObject);
     }
 

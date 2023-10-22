@@ -4890,7 +4890,7 @@ GameObject:
   - component: {fileID: 1817737408948852790}
   m_Layer: 0
   m_Name: FX_Explosion
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9781,6 +9781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  didPlayerShoot: 1
 --- !u!82 &7266995983262671889
 AudioSource:
   m_ObjectHideFlags: 0

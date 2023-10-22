@@ -6,7 +6,8 @@ public class FX_Explosion : MonoBehaviour
 {
     private SphereCollider _collider;
 
-    public float damage = 1f;
+    public int damage = 1;
+    public bool didPlayerShoot = true;
 
     void Start()
     {
@@ -20,12 +21,31 @@ public class FX_Explosion : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy")
+        LivingEntity livingEntity = other.GetComponent<LivingEntity>();
+        if (livingEntity != null)
         {
-            // 데미지 관련
-            // 
-            ////
-            Destroy(other.gameObject);
+            if (other.tag == "Player")
+            {
+                if (didPlayerShoot)
+                {
+                    return;
+                }
+                else
+                {
+                    livingEntity.OnDamage(damage, transform.position, Vector3.zero);
+                }
+            }
+            else if (other.tag == "Enemy")
+            {
+                if (didPlayerShoot)
+                {
+                    livingEntity.OnDamage(damage, transform.position, Vector3.zero);
+                }
+                else
+                {
+                    return;
+                }
+            }
         }
     }
 

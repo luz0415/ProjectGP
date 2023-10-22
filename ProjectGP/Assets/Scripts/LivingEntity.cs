@@ -16,6 +16,7 @@ public class LivingEntity : MonoBehaviour
 
     public virtual void OnDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
     {
+        if (dead) return;
         HP -= damage;
         if (HP <= 0 && !dead)
         {

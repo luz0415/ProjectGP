@@ -18,6 +18,8 @@ public class Enemy_Move : MonoBehaviour
     private bool isAttacking = false;
 
     private Enemy enemy;
+    private Animator animator;
+    private Weapon weapon;
 
     void Start()
     {
@@ -28,12 +30,14 @@ public class Enemy_Move : MonoBehaviour
         agent.stoppingDistance = attackRange; // 도착한 목적지 = 공격 범위 시작
 
         enemy = GetComponent<Enemy>();
+        animator = GetComponent<Animator>();
+        weapon = GetComponentInChildren<Weapon>();
     }
 
 
     void Update()
     {
-        if (GameManager.instance != null && GameManager.instance.isGamePaused) return;
+        if (GameManager.instance != null && (GameManager.instance.isGamePaused || GameManager.instance.isEnemyPaused)) return;
         if (enemy.dead) return;
 
         // 플레이어가 추적 범위 내에 있는지 확인한다.
@@ -42,6 +46,7 @@ public class Enemy_Move : MonoBehaviour
         // 추적범위보다 거리가 짧을 때
         if (distanceToPlayer <= detectionRange && !isAttacking)
         {
+            transform.LookAt(target);
             agent.SetDestination(target.position); // 플레이어 추적한다.
 
             if (agent.remainingDistance <= agent.stoppingDistance)
@@ -60,8 +65,6 @@ public class Enemy_Move : MonoBehaviour
             {   // 공격 범위 밖이고 목적지에 도착 안했으면 이동 계속함
                 agent.isStopped = false;
             }
-
-
         }
         else
         {   // 플레이어가 추적 범위를 벗어나면 이동 중지
@@ -69,12 +72,20 @@ public class Enemy_Move : MonoBehaviour
             isAttacking = false;
         }
      
+        if(agent.velocity.magnitude == 0)
+        {
+            animator.SetBool("isWalk", false);
+        }
+        else
+        {
+            animator.SetBool("isWalk", true);
+        }
        
     }
 
     void Attack()
     {
-        // 공격 로직 구현하는 곳
+        weapon.BulletFire();
     }
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shotgun : Weapon
 {
-    void Start()
+    void Awake()
     {
         currentBullet = maxBullet;
         currentDamp = 0;
@@ -17,7 +17,6 @@ public class Shotgun : Weapon
     private void OnEnable()
     {
         Reload();
-
         _light.GetComponent<Light>().enabled = false;
     }
     void Update()
@@ -31,8 +30,9 @@ public class Shotgun : Weapon
         }
     }
 
-    void BulletFire()
+    public override void BulletFire()
     {
+        if (GameManager.instance.isGamePaused) return;
         // currentDamp¸¶´Ù ÃÑ ¹ß»ç
         if (currentDamp <= 0 && currentBullet > 0 && !isReload)
         {

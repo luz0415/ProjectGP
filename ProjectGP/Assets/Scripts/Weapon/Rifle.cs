@@ -6,7 +6,7 @@ using UnityEngine;
 public class Rifle : Weapon
 {
 
-    void Start()
+    void Awake()
     {
         currentBullet = maxBullet;
         currentDamp = 0;
@@ -33,10 +33,11 @@ public class Rifle : Weapon
         }
     }
 
-    void BulletFire()
+    public override void BulletFire()
     {
+        if (GameManager.instance.isGamePaused) return;
         // currentDamp¸¶´Ù ÃÑ ¹ß»ç
-        if(currentDamp <= 0 && currentBullet >0 && !isReload)
+        if (currentDamp <= 0 && currentBullet >0 && !isReload)
         {
             scriptPlayer.animator.SetTrigger("shot");
             scriptPlayer.isIdle = false;
