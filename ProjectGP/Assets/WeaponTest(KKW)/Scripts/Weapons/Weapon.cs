@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public int maxBullet;     // 최대 총알 수
-    protected float currentBullet;        // 현재 남은 총알 수
+    public float currentBullet;        // 현재 남은 총알 수 UI 표시 때문에 protected -> public 으로 변경
     public float fireDamp;      // 연사 지연 시간
     protected float currentDamp;          // 실제 연산에 쓰일 지연시간
     public float reloadTime;    // 재장전에 걸리는 시간
