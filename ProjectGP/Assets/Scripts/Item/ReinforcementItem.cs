@@ -123,17 +123,17 @@ public class ReinforcementItem : MonoBehaviour, IItem
     private void VirtualCombatSimulation(GameObject target)
     {
         // 전투 시작 후 0.5초 동안 플레이어만 움직임.
-        PlayerHP playerHP = target.GetComponent<PlayerHP>();
-        if (playerHP != null)
-        {
-            playerHP.DecreaseStartHP(-1);
-        }
         GameManager.instance.hasVirtualCombatSimulation = true;
     }
 
     private void SuperDrink(GameObject target)
     {
         // 최대체력 -1, 공격속도 20% 증가.
+        PlayerHP playerHP = target.GetComponent<PlayerHP>();
+        if (playerHP != null)
+        {
+            playerHP.DecreaseStartHP(1);
+        }
         WeaponManager.instance.DecreaseFireDamp(0.8f);
     }
 

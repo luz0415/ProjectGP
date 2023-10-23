@@ -14,7 +14,6 @@ public class PlayerDodge : MonoBehaviour
     // 대쉬 속도를 시간/거리 로 설정을 해놨기 때문
 
     private bool canDash = true;        // 대쉬 가능 상태인가
-    private bool isDodging = false;     // 회피 중인 상태인가
 
     public bool hasStealthModule = false;
     private CapsuleCollider capsuleCollider;
@@ -35,8 +34,6 @@ public class PlayerDodge : MonoBehaviour
 
     private IEnumerator PerformDash()
     {
-        print("DASH!");
-        isDodging = true;
         canDash = false;
 
         // 대쉬 방향 설정 (현재 플레이어가 보는 방향)
@@ -52,6 +49,7 @@ public class PlayerDodge : MonoBehaviour
         float startTime = Time.time;
 
         if (hasStealthModule) GameManager.instance.isEnemyPaused = true;
+        GetComponent<PlayerHP>().isDodging = true;
 
         while ((Time.time - startTime) < dashDuration)
         {
@@ -68,10 +66,8 @@ public class PlayerDodge : MonoBehaviour
             yield return null;
         }
 
-        // 대쉬 종료 처리
-        isDodging = false;
-
         if (hasStealthModule) GameManager.instance.isEnemyPaused = false;
+        GetComponent<PlayerHP>().isDodging = false;
 
         // 대쉬 쿨타임 시작
         yield return new WaitForSeconds(dashCooldown);

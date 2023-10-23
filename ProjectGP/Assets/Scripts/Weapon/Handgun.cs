@@ -33,7 +33,6 @@ public class Handgun : Weapon
     public override void BulletFire()
     {
         if (GameManager.instance.isGamePaused) return;
-        Debug.Log(currentDamp);
         // currentDamp¸¶´Ù ÃÑ ¹ß»ç
         if (currentDamp <= 0 && currentBullet > 0 && !isReload)
         {
@@ -64,7 +63,6 @@ public class Handgun : Weapon
     {
         scriptPlayer.animator.SetTrigger("reload");
 
-        Debug.Log("Reload Start");
         isReload = true;
         StartCoroutine(ReloadBullet());
     }
@@ -85,8 +83,6 @@ public class Handgun : Weapon
             scriptPlayer.isIdle = false;
             yield return new WaitForSeconds(0.1f);
         }
-
-        Debug.Log("Reload End");
         isReload = false;
         currentBullet = maxBullet;
     }

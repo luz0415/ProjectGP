@@ -64,7 +64,6 @@ public class Enemy_Handgun : Weapon
     {
         animator.SetTrigger("reload");
 
-        Debug.Log("Reload Start");
         isReload = true;
         StartCoroutine(ReloadBullet());
     }
@@ -85,7 +84,6 @@ public class Enemy_Handgun : Weapon
             yield return new WaitForSeconds(0.1f);
         }
 
-        Debug.Log("Reload End");
         isReload = false;
         currentBullet = maxBullet;
     }

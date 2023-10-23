@@ -30,7 +30,7 @@ public class UiManager : MonoBehaviour
 
     public RectTransform UIHeart;
     public GameObject heartPrefab;
-    private List<Image> hearts = new List<Image>();
+    public List<Image> hearts = new List<Image>();
 
     public int health;
     bool OptionMenu_On = false;
@@ -81,6 +81,7 @@ public class UiManager : MonoBehaviour
         for (int i = 0; i < upHealth; i++)
         {
             if (health == hearts.Count) return;
+
             hearts[health].color = new Color(0.915f, 0.39f, 0.39f, 1);
             health++;
         }
@@ -92,8 +93,11 @@ public class UiManager : MonoBehaviour
         for (int i = 0; i < downHealth; i++)
         {
             GameObject destroyObject = hearts[hearts.Count - 1].gameObject;
-            health--;
-            hearts.RemoveAt(health);
+            if(health == hearts.Count)
+            {
+                health--;
+            }
+            hearts.RemoveAt(hearts.Count - 1);
             Destroy(destroyObject);
         }
     }
@@ -102,6 +106,7 @@ public class UiManager : MonoBehaviour
     {
         for (int i = 0; i < upHealth; i++)
         {
+            print(health);
             Image newHealth;
             if (health == 0)
             {

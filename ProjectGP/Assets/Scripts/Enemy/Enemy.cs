@@ -45,9 +45,8 @@ public class Enemy : LivingEntity
 
     public override void Dead()
     {
+        print("Enemy Die!");
         base.Dead();
-
-        enemyAnimator.SetTrigger("Die");
 
         StartCoroutine(DeadCoroutine());
     }

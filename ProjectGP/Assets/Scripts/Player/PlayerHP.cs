@@ -12,6 +12,7 @@ public class PlayerHP : LivingEntity
 
     public bool canRevive = false;
     public bool damageDouble = false;
+    public bool isDodging = false;
 
     //private Slider playerHPSlider;
 
@@ -30,6 +31,7 @@ public class PlayerHP : LivingEntity
 
     public override void OnDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
     {
+        if (isDodging) return;
         if (damageDouble) damage *= 2;
 
         base.OnDamage(damage, hitPoint, hitNormal);

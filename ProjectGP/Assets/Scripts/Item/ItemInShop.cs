@@ -40,7 +40,6 @@ public class ItemInShop : MonoBehaviour
     {
         if(canBuy && Input.GetKeyDown(KeyCode.LeftControl))
         {
-            print("Buy");
             if(playerItem.coin >= cost)
             {
                 playerItem.coin -= cost;
