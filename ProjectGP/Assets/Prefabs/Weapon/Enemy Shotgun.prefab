@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8712140252145153445}
   - component: {fileID: 8712140252145153450}
   - component: {fileID: 8712140252145153451}
-  - component: {fileID: 8712140252145153448}
+  - component: {fileID: 836959145064662121}
   m_Layer: 0
   m_Name: Enemy Shotgun
   m_TagString: Untagged
@@ -185,7 +185,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8712140252145153448
+--- !u!114 &836959145064662121
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,14 +194,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8712140252500589658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da55f7f504310bd469b891bbe4241cc9, type: 3}
+  m_Script: {fileID: 11500000, guid: 67172cc0473bddd4a8f9e0657c5af27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxBullet: 5
   currentBullet: 0
-  fireDamp: 2
+  fireDamp: 0.8
   reloadTime: 2
-  bullet: {fileID: 3094207704728694393, guid: dc5dc6a5dd4bb2f4f9be4abf28efc8a7, type: 3}
+  bullet: {fileID: 893981469213031911, guid: dc5dc6a5dd4bb2f4f9be4abf28efc8a7, type: 3}
   firePos: {fileID: 8712140252543766817}
   player: {fileID: 0}
   scriptPlayer: {fileID: 0}

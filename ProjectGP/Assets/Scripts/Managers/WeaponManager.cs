@@ -86,7 +86,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    void Swap()
+    public void Swap()
     {
         CheckIsIdle();
         if (player.isIdle != true)

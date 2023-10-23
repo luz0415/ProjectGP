@@ -1706,7 +1706,7 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 2890099553260906171, guid: c1e8427be27ace54d84c2ab657efe9d7, type: 3}
   - {fileID: 1584665068875458412, guid: 2d2b98b9f6ff79047b5bcb09ef672027, type: 3}
-  centerSpawnRate: 0.75
+  centerSpawnRate: 0.8
 --- !u!65 &2347435762100127871
 BoxCollider:
   m_ObjectHideFlags: 0

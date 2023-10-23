@@ -34,8 +34,10 @@ public class GameManager : MonoBehaviour
 
     private bool callOnce = false;
 
+    public bool hasRoboticEye = false;
     public bool hasVirtualCombatSimulation = false;
     public bool isEnemyPaused;
+   
 
     private void Awake()
     {

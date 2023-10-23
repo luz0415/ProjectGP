@@ -14,19 +14,19 @@ public class PlayerHP : LivingEntity
     public bool damageDouble = false;
     public bool isDodging = false;
 
+    public ParticleSystem bloodEffect;
+
     //private Slider playerHPSlider;
 
     private void Awake()
     {
         playerAnimator = GetComponent<Animator>();
         playerMaterial = GetComponentInChildren<Renderer>().material;
-        //playerHPSlider = GetComponentInChildren<Slider>();
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        //playerHPSlider.value = startingHP;
     }
 
     public override void OnDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
@@ -37,11 +37,12 @@ public class PlayerHP : LivingEntity
         base.OnDamage(damage, hitPoint, hitNormal);
         UiManager.instance.HealthDown(damage);
         StartCoroutine(DamageEffect());
-        //playerHPSlider.value -= damage;
     }
 
     private IEnumerator DamageEffect()
     {
+        bloodEffect.Play();
+
         playerMaterial.color = Color.red;
         yield return new WaitForSeconds(damageEffectTime);
         playerMaterial.color = Color.white;
@@ -58,8 +59,6 @@ public class PlayerHP : LivingEntity
         startingHP += increaseHP;
         HP += increaseHP;
         UiManager.instance.MaxHealthUp(increaseHP);
-        //playerHPSlider.maxValue = startingHP;
-        //playerHPSlider.value = HP;
     }
 
     public void DecreaseStartHP(int decreaseHP)
@@ -70,8 +69,6 @@ public class PlayerHP : LivingEntity
             HP -= decreaseHP;
         }
         UiManager.instance.MaxHealthDown(decreaseHP);
-        //playerHPSlider.maxValue = startingHP;
-        //playerHPSlider.value = HP;
     }
 
     public override void Dead()
@@ -84,10 +81,6 @@ public class PlayerHP : LivingEntity
         }
 
         base.Dead();
-
-
-        //playerMovement.enabled = false;
-        //playerShooter.enabled = false;
 
         GameManager.instance.EndGame();
     }

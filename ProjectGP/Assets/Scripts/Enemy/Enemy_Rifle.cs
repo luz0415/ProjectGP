@@ -21,7 +21,6 @@ public class Enemy_Rifle : Weapon
     private void OnEnable()
     {
         Reload();
-
         _light.GetComponent<Light>().enabled = false;
     }
 
@@ -50,6 +49,7 @@ public class Enemy_Rifle : Weapon
 
             // 총알 인스턴스화
             Ammo_Rifle ammo = Instantiate(bullet, firePos.position, animator.transform.rotation).GetComponent<Ammo_Rifle>();
+            ammo.GetComponentInChildren<Renderer>().material.color = Color.red;
             ammo.didPlayerShoot = false;
         }
         // 총알 다 쓴 경우 재장전

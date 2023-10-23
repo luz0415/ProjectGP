@@ -74,7 +74,7 @@ public class MapSpawner : MonoBehaviour
 
     private void SetMaxRoomCount()
     {
-        maxRoomCount = Random.Range(0, maxRoomRandomNumber) + 5 + (int)(nowFloor * 2.5);
+        maxRoomCount = Random.Range(0, maxRoomRandomNumber) + 5 + (int)(nowFloor * 1.5);
     }
 
     private void FloorPlanInitialization()
@@ -311,6 +311,5 @@ public class MapSpawner : MonoBehaviour
         int[] dy = { -1, 1, 0, 0 };
         nowMap = MapUI[nowX + dx[direction], nowY + dy[direction]];
         nowMap.transform.GetChild(fullRoomChildIndex).gameObject.SetActive(true);
-
     }
 }

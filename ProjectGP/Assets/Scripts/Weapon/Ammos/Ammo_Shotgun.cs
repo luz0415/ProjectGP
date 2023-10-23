@@ -17,6 +17,8 @@ public class Ammo_Shotgun : MonoBehaviour
     {
         Vector3 fwb = transform.TransformDirection(Vector3.up);
         GetComponent<Rigidbody>().AddForce(fwb * speed);
+
+        Destroy(gameObject, 1.5f);
     }
 
     private void OnTriggerEnter(Collider other)

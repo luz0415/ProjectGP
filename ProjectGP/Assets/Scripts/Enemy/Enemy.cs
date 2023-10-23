@@ -10,13 +10,13 @@ public class Enemy : LivingEntity
 
     public float damageEffectTime = 0.1f;
 
-    //private Slider playerHPSlider;
+    public ParticleSystem hitEffect;
+    public ParticleSystem deadEffect;
 
     private void Awake()
     {
         enemyAnimator = GetComponent<Animator>();
         enemyMaterial = GetComponentInChildren<Renderer>().material;
-        //playerHPSlider = GetComponentInChildren<Slider>();
     }
 
     protected override void OnEnable()
@@ -32,6 +32,8 @@ public class Enemy : LivingEntity
 
     private IEnumerator DamageEffect()
     {
+        hitEffect.Play();
+
         enemyMaterial.color = Color.red;
         yield return new WaitForSeconds(damageEffectTime);
         enemyMaterial.color = Color.white;
@@ -40,12 +42,10 @@ public class Enemy : LivingEntity
     public override void RestoreHP(int restoreHP)
     {
         base.RestoreHP(restoreHP);
-        //playerHPSlider.value = HP;
     }
 
     public override void Dead()
     {
-        print("Enemy Die!");
         base.Dead();
 
         StartCoroutine(DeadCoroutine());
@@ -53,6 +53,7 @@ public class Enemy : LivingEntity
 
     private IEnumerator DeadCoroutine()
     {
+        Instantiate(deadEffect, transform.position + Vector3.up, Quaternion.identity);
         yield return new WaitForSeconds(0.0f);
         Destroy(gameObject);
     }

@@ -16,9 +16,6 @@ public class Player : MonoBehaviour
     // 민감도
     public float lookSensitivity;
 
-    // 카메라 한계
-    private float cameraRotationLimit;
-
     // 필요한 컴포넌트
     public Camera theCamera;
     private Rigidbody myRigid;
@@ -37,7 +34,13 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (GameManager.instance != null && GameManager.instance.isGamePaused) return;
+        if (GameManager.instance != null && GameManager.instance.isGamePaused)
+        {
+            animator.SetBool("isWalk", false);
+            animator.SetTrigger("setIdle");
+            return;
+        }
+
 
         TryRun();
         Move();

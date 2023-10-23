@@ -66,6 +66,10 @@ public class ItemInShop : MonoBehaviour
             {
                 itemText.color = Color.red;
             }
+            else
+            {
+                itemText.color = Color.white;
+            }
 
             canBuy = true;
         }

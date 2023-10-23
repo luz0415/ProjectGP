@@ -21,5 +21,7 @@ public class WeaponItem : MonoBehaviour, IItem
         }
         WeaponManager.instance.hasWeapon[thisWeaponIndex] = true;
         WeaponManager.instance.weaponIndex = thisWeaponIndex;
+
+        WeaponManager.instance.Swap();
     }
 }

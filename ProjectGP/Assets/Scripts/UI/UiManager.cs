@@ -106,7 +106,6 @@ public class UiManager : MonoBehaviour
     {
         for (int i = 0; i < upHealth; i++)
         {
-            print(health);
             Image newHealth;
             if (health == 0)
             {

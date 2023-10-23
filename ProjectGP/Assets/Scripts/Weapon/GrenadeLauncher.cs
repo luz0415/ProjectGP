@@ -30,6 +30,10 @@ public class GrenadeLauncher : Weapon
             Debug.Log("Fire");
             BulletFire();
         }
+        if ((maxBullet > currentBullet) && Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
+        }
     }
 
     public override void BulletFire()
@@ -55,7 +59,7 @@ public class GrenadeLauncher : Weapon
             Instantiate(bullet, firePos.position, player.transform.rotation);
         }
         // 총알 다 쓴 경우 재장전
-        else if (currentBullet <= 0 && !isReload)
+        if (currentBullet <= 0 && !isReload)
         {
             Reload();         
         }

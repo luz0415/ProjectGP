@@ -38,6 +38,7 @@ public class Enemy_Move : MonoBehaviour
     void Update()
     {
         if (GameManager.instance != null && (GameManager.instance.isGamePaused || GameManager.instance.isEnemyPaused)) return;
+        if(GameManager.instance.hasRoboticEye) agent.speed = moveSpeed * 0.9f;
         if (enemy.dead) return;
 
         // 플레이어가 추적 범위 내에 있는지 확인한다.

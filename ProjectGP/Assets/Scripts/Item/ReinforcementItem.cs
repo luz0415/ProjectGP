@@ -106,12 +106,13 @@ public class ReinforcementItem : MonoBehaviour, IItem
     private void RoboticEye(GameObject target)
     {
         // 적 속도 10% 감소
+        GameManager.instance.hasRoboticEye = true;
     }
 
     private void PlasteelMagazine(GameObject target)
     {
         // 무기 탄창 20% 증가
-        WeaponManager.instance.DecreaseAllReloadTime(0.8f);
+        WeaponManager.instance.IncreseAllMaxBullet(1.2f);
     }
 
     private void StealthModule(GameObject target)

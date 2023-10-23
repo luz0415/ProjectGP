@@ -51,6 +51,7 @@ public class Enemy_Handgun : Weapon
             // 총알 인스턴스화
 
             Ammo_Handgun ammo = Instantiate(bullet, firePos.position, animator.transform.rotation).GetComponent<Ammo_Handgun>();
+            ammo.GetComponentInChildren<Renderer>().material.color = Color.red;
             ammo.didPlayerShoot = false;
         }
         // 총알 다 쓴 경우 재장전
