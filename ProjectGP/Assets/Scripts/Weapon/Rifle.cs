@@ -26,7 +26,7 @@ public class Rifle : Weapon
     void Update()
     {
         currentDamp -= Time.deltaTime;
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             Debug.Log("Fire");
             BulletFire();
